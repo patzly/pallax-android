@@ -40,12 +40,10 @@ import com.google.android.material.color.DynamicColors;
 import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.snackbar.Snackbar.Callback;
-import java.util.Locale;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.EXTRA;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.THEME;
-import com.patrickzedler.pallax.NavMainDirections;
 import com.patrickzedler.pallax.R;
 import com.patrickzedler.pallax.activity.LauncherActivity;
 import com.patrickzedler.pallax.activity.MainActivity;
@@ -59,6 +57,7 @@ import com.patrickzedler.pallax.util.ResUtil;
 import com.patrickzedler.pallax.util.SystemUiUtil;
 import com.patrickzedler.pallax.util.ViewUtil;
 import com.patrickzedler.pallax.view.SelectionCardView;
+import java.util.Locale;
 
 public class OtherFragment extends BaseFragment
     implements OnClickListener, OnCheckedChangeListener {
@@ -120,17 +119,6 @@ public class OtherFragment extends BaseFragment
 
     setUpThemeSelection();
 
-    boolean gpuOptionEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-    ViewUtil.setEnabledAlpha(gpuOptionEnabled, false, binding.linearOtherGpu);
-    ViewUtil.setEnabled(gpuOptionEnabled, binding.switchOtherGpu);
-    binding.cardOtherGpu.setVisibility(gpuOptionEnabled ? View.GONE : View.VISIBLE);
-    if (gpuOptionEnabled) {
-      binding.linearOtherGpu.setOnClickListener(this);
-    }
-    binding.switchOtherGpu.setChecked(
-        gpuOptionEnabled && getSharedPrefs().getBoolean(PREF.GPU, DEF.GPU)
-    );
-
     binding.switchOtherLauncher.setChecked(
         activity.getPackageManager().getComponentEnabledSetting(
             new ComponentName(activity, LauncherActivity.class)
@@ -178,7 +166,6 @@ public class OtherFragment extends BaseFragment
 
     ViewUtil.setOnCheckedChangeListeners(
         this,
-        binding.switchOtherGpu,
         binding.switchOtherLauncher
     );
   }
@@ -191,9 +178,6 @@ public class OtherFragment extends BaseFragment
       ViewUtil.startIcon(binding.imageOtherLanguage);
       performHapticClick();
       navigate(OtherFragmentDirections.actionOtherToLanguagesDialog());
-    } else if (id == R.id.linear_other_gpu) {
-      ViewUtil.startIcon(binding.imageOtherGpu);
-      binding.switchOtherGpu.setChecked(!binding.switchOtherGpu.isChecked());
     } else if (id == R.id.linear_other_launcher) {
       ViewUtil.startIcon(binding.imageOtherLauncher);
       binding.switchOtherLauncher.setChecked(!binding.switchOtherLauncher.isChecked());
@@ -223,11 +207,7 @@ public class OtherFragment extends BaseFragment
   @Override
   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     int id = buttonView.getId();
-    if (id == R.id.switch_other_gpu) {
-      getSharedPrefs().edit().putBoolean(PREF.GPU, isChecked).apply();
-      performHapticClick();
-      activity.showForceStopRequest(NavMainDirections.actionGlobalApplyDialog());
-    } else if (id == R.id.switch_other_launcher) {
+    if (id == R.id.switch_other_launcher) {
       performHapticClick();
       if (isChecked) {
         activity.showSnackbar(

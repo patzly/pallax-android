@@ -74,7 +74,6 @@ public final class Constants {
     // Other
 
     public static final String LANGUAGE = "language";
-    public static final String GPU = "hardware_acceleration";
     public static final String THEME = "app_theme";
     public static final String MODE = "mode";
 
@@ -112,7 +111,6 @@ public final class Constants {
     public static final int ZOOM_DURATION = 1200;
 
     public static final String LANGUAGE = null;
-    public static final boolean GPU = true;
     public static final String THEME = "";
     public static final int MODE = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
   }

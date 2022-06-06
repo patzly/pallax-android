@@ -121,6 +121,7 @@
 
         <com.google.android.material.card.MaterialCardView
           style="@style/Widget.Pallax.Card.Text"
+          android:layout_marginBottom="16dp"
           app:contentPaddingBottom="8dp"
           app:contentPaddingLeft="0dp"
           app:contentPaddingRight="0dp">
@@ -161,6 +162,20 @@
             </LinearLayout>
 
           </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+          android:id="@+id/card_overview_gpu"
+          style="@style/Widget.Pallax.Card.Text"
+          app:cardBackgroundColor="?attr/colorErrorContainer">
+
+          <TextView
+            style="@style/Widget.Pallax.TextView.Paragraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnErrorContainer"
+            android:text="@string/msg_gpu_warning" />
 
         </com.google.android.material.card.MaterialCardView>
 

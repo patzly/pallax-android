@@ -575,7 +575,6 @@ public class MainActivity extends AppCompatActivity {
     }, delay);
   }
 
-  @SuppressLint("ShowToast")
   public void showForceStopRequest(NavDirections directions) {
     if (!LiveWallpaperService.isMainEngineRunning() || binding == null) {
       return;

@@ -257,7 +257,6 @@ public class LiveWallpaperService extends WallpaperService {
     private long lastDrawZoomLauncher, lastDrawZoomUnlock, lastDrawTilt;
     private boolean isVisible;
     private boolean isDark;
-    private boolean useGpu;
     private boolean isListenerRegistered = false;
     private boolean isSurfaceAvailable = false;
     private boolean iconDropConsumed = true;
@@ -324,9 +323,6 @@ public class LiveWallpaperService extends WallpaperService {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
       };
-
-      // Load this only once on creation, else it would cause a crash caused by OpenGL
-      useGpu = sharedPrefs.getBoolean(PREF.GPU, DEF.GPU);
 
       hasAccelerometer = SensorUtil.hasAccelerometer(context);
 
@@ -688,7 +684,7 @@ public class LiveWallpaperService extends WallpaperService {
       final SurfaceHolder surfaceHolder = getSurfaceHolder();
       Canvas canvas = null;
       try {
-        if (VERSION.SDK_INT >= VERSION_CODES.O && useGpu) {
+        if (VERSION.SDK_INT >= VERSION_CODES.O) {
           canvas = surfaceHolder.lockHardwareCanvas();
         } else {
           canvas = surfaceHolder.lockCanvas();
