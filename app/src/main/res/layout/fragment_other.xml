@@ -49,7 +49,7 @@
       android:layout_height="wrap_content">
 
       <LinearLayout
-        android:id="@+id/linear_other_container_items1"
+        android:id="@+id/linear_other_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -168,48 +168,6 @@
           </LinearLayout>
 
         </LinearLayout>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/linear_other_container_card"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/linear_other_container_items1"
-        app:layout_constraintWidth_max="@dimen/max_content_width"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.card.MaterialCardView
-          android:id="@+id/card_other_gpu"
-          style="@style/Widget.Pallax.Card.Text"
-          android:layout_marginTop="8dp"
-          app:cardBackgroundColor="?attr/colorErrorContainer">
-
-          <TextView
-            style="@style/Widget.Pallax.TextView.Paragraph"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnErrorContainer"
-            android:text="@string/other_gpu_info" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/linear_other_container_items2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/linear_other_container_card"
-        app:layout_constraintWidth_max="@dimen/max_content_width"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
           android:id="@+id/linear_other_launcher"

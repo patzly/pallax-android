@@ -205,6 +205,7 @@ public class WallpaperDrawable {
     if (drawable == null) {
       return;
     }
+    // canvas.drawColor(Color.BLACK);
 
     float scale = this.scale - zoom;
     point = getFinalCenter(canvas);
