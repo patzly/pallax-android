@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of Pallax Android.
+  ~
+  ~ Pallax Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Pallax Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Pallax Android. If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (c) 2022 by Patrick Zedler
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+  <!-- For languages not supported by Jost*, the system font will be used as fallback.
+       If the system font is used, the medium variant of Jost* won't be replaced by a medium/bold
+       variant of the system font, so we have to configure these texts to be styled bold for these
+       locales with textStyle="bold".
+       Untranslated text (names or untranslated strings) with textStyle set to bold will look like
+       the medium variant of Jost*, so there is no extra attention needed for e.g. the app bar.
+       Affected languages: Arab, Chinese, Hebrew, Uighur -->
+
+  <!-- Toolbar -->
+
+  <style
+    name="Widget.Pallax.CollapsingToolbar"
+    parent="@style/Widget.Material3.CollapsingToolbar.Large">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">?attr/collapsingToolbarLayoutLargeSize</item>
+    <item name="layout_scrollFlags">scroll|exitUntilCollapsed|snap</item>
+    <item name="collapsedTitleTextAppearance">@style/TextAppearance.Pallax.Toolbar.Title</item>
+    <item name="expandedTitleTextAppearance">@style/TextAppearance.Pallax.HeadlineMedium</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.Toolbar"
+    parent="@style/Widget.Material3.Toolbar.OnSurface">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">?attr/actionBarSize</item>
+    <item name="titleTextAppearance">@style/TextAppearance.Pallax.Toolbar.Title</item>
+    <item name="titleMarginStart">16dp</item>
+    <item name="android:actionOverflowMenuStyle">@style/ThemeOverlay.Pallax.OverFlow</item>
+  </style>
+
+  <style name="Widget.Pallax.Toolbar.Back" parent="@style/Widget.Pallax.Toolbar">
+    <item name="navigationIcon">@drawable/ic_round_arrow_back</item>
+    <item name="navigationContentDescription">@string/action_back</item>
+  </style>
+
+  <style name="Widget.Pallax.Toolbar.Centered" parent="@style/Widget.Pallax.Toolbar">
+    <item name="titleCentered">true</item>
+  </style>
+
+  <style name="ThemeOverlay.Pallax.OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+    <item name="android:tint">?attr/colorOnSurfaceVariant</item>
+  </style>
+
+  <!-- Snackbar -->
+
+  <style name="Widget.Pallax.Snackbar" parent="Widget.Material3.Snackbar">
+    <item name="shapeAppearance">?attr/shapeAppearanceCornerMedium</item>
+  </style>
+
+  <style name="Widget.Pallax.Snackbar.TextView" parent="Widget.Material3.Snackbar.TextView">
+    <item name="android:textColor">?attr/colorSurfaceVariant</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.Button.TextButton.Snackbar"
+    parent="Widget.Material3.Button.TextButton.Snackbar">
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <!-- ImageView (icons) -->
+
+  <style name="Widget.Pallax.ImageView.Icon" parent="">
+    <item name="android:layout_width">24dp</item>
+    <item name="android:layout_height">24dp</item>
+    <item name="tint">?attr/colorOnSurfaceVariant</item>
+    <item name="android:importantForAccessibility">no</item>
+  </style>
+
+  <style name="Widget.Pallax.ImageView.Icon.Navigation" parent="Widget.Pallax.ImageView.Icon">
+    <item name="tint">?attr/colorOnSurface</item>
+    <item name="android:layout_gravity">center</item>
+  </style>
+
+  <!-- Button -->
+
+  <style
+    name="Base.Pallax.Button.UnelevatedButton"
+    parent="Widget.Material3.Button.UnelevatedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.Button.UnelevatedButton"
+    parent="Base.Pallax.Button.UnelevatedButton">
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <style
+    name="Base.Pallax.Button.OutlinedButton"
+    parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="rippleColor">@color/selector_highlight</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.Button.OutlinedButton"
+    parent="Base.Pallax.Button.OutlinedButton">
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <style
+    name="Base.Pallax.Button.TextButton"
+    parent="Widget.Material3.Button.TextButton">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.Button.TextButton"
+    parent="Base.Pallax.Button.TextButton">
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <!-- CardView -->
+
+  <style name="Widget.Pallax.Card.Text" parent="@style/Widget.Material3.CardView.Filled">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginBottom">8dp</item>
+    <item name="contentPadding">16dp</item>
+    <item name="cardElevation">0dp</item>
+    <item name="cardCornerRadius">16dp</item>
+    <item name="rippleColor">@color/selector_highlight</item>
+  </style>
+
+  <!-- CheckBox -->
+
+  <style name="Widget.Pallax.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:minHeight">38dp</item>
+    <item name="android:textAlignment">viewStart</item>
+  </style>
+
+  <!-- Switch -->
+
+  <style name="Widget.Pallax.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">16dp</item>
+  </style>
+
+  <!-- Slider -->
+
+  <style name="Widget.Pallax.Slider" parent="Widget.Material3.Slider">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">59dp</item>
+    <item name="android:layout_marginEnd">14dp</item>
+    <item name="android:stepSize">1</item>
+    <item name="thumbElevation">1dp</item>
+    <item name="labelStyle">@style/Widget.Pallax.Tooltip</item>
+    <item name="trackColorInactive">@color/selector_slider_inactive_track_color</item>
+    <item name="tickColorActive">?attr/colorSurfaceVariant</item>
+  </style>
+
+  <!-- Tooltip -->
+
+  <style name="Widget.Pallax.Tooltip" parent="Widget.Material3.Tooltip">
+    <item name="android:textColor">?attr/colorOnTertiaryContainer</item>
+    <item name="android:textAppearance">@style/TextAppearance.Pallax.Tooltip</item>
+    <item name="shapeAppearance">@style/ShapeAppearance.Pallax.Tooltip</item>
+    <item name="backgroundTint">?attr/colorTertiaryContainer</item>
+  </style>
+
+  <style name="ShapeAppearance.Pallax.Tooltip" parent="">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSize">8dp</item>
+  </style>
+
+  <!-- ExtendedFloatingActionButton -->
+
+  <style
+    name="Widget.Pallax.ExtendedFloatingActionButton"
+    parent="Widget.Material3.ExtendedFloatingActionButton.Primary">
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <!-- LinearLayout (lists) -->
+
+  <style name="Widget.Pallax.LinearLayout.ListItem" parent="">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:paddingTop">16dp</item>
+    <item name="android:paddingBottom">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.Clickable"
+    parent="Widget.Pallax.LinearLayout.ListItem">
+    <item name="android:clickable">true</item>
+    <item name="android:background">@drawable/ripple_list_item_bg</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.SingleLine"
+    parent="Widget.Pallax.LinearLayout.ListItem">
+    <item name="android:minHeight">48dp</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.SingleLine.Icon"
+    parent="Widget.Pallax.LinearLayout.ListItem.SingleLine">
+    <item name="android:minHeight">56dp</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.SingleLine.Clickable"
+    parent="Widget.Pallax.LinearLayout.ListItem.SingleLine">
+    <item name="android:clickable">true</item>
+    <item name="android:background">@drawable/ripple_list_item_bg</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.SingleLine.Icon.Clickable"
+    parent="Widget.Pallax.LinearLayout.ListItem.SingleLine.Icon">
+    <item name="android:clickable">true</item>
+    <item name="android:background">@drawable/ripple_list_item_bg</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.TwoLine"
+    parent="Widget.Pallax.LinearLayout.ListItem">
+    <item name="android:minHeight">64dp</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon"
+    parent="Widget.Pallax.LinearLayout.ListItem.TwoLine">
+    <item name="android:minHeight">72dp</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.TwoLine.Clickable"
+    parent="Widget.Pallax.LinearLayout.ListItem.TwoLine">
+    <item name="android:clickable">true</item>
+    <item name="android:background">@drawable/ripple_list_item_bg</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon.Clickable"
+    parent="Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon">
+    <item name="android:clickable">true</item>
+    <item name="android:background">@drawable/ripple_list_item_bg</item>
+  </style>
+
+  <style name="Widget.Pallax.LinearLayout.ListItem.TextBox" parent="">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch"
+    parent="Widget.Pallax.LinearLayout.ListItem.TextBox">
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+
+  <!-- ImageView (lists) -->
+
+  <style name="Widget.Pallax.ImageView.ListItem.Icon" parent="">
+    <item name="android:layout_width">24dp</item>
+    <item name="android:layout_height">24dp</item>
+    <item name="android:layout_gravity">start|center_vertical</item>
+    <item name="android:layout_marginEnd">32dp</item>
+    <item name="tint">?attr/colorOnSurfaceVariant</item>
+    <item name="android:importantForAccessibility">no</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.ImageView.ListItem.Icon.Colored"
+    parent="Widget.Pallax.ImageView.ListItem.Icon">
+    <item name="tint">@null</item>
+  </style>
+
+  <style
+    name="Widget.Pallax.ImageView.ListItem.Icon.End"
+    parent="Widget.Pallax.ImageView.ListItem.Icon">
+    <item name="android:layout_gravity">end|center_vertical</item>
+    <item name="android:layout_marginStart">16dp</item>
+    <item name="android:layout_marginEnd">0dp</item>
+  </style>
+
+  <!-- TextView -->
+
+  <style name="Widget.Pallax.TextView" parent="Widget.MaterialComponents.TextView">
+    <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+    <item name="android:lineSpacingExtra">-1.5sp</item>
+    <item name="android:textColor">?attr/colorOnBackground</item>
+    <item name="android:textAlignment">viewStart</item>
+    <item name="android:fontFamily">@font/jost_book</item>
+    <item name="android:breakStrategy" tools:targetApi="m">high_quality</item>
+    <item name="android:hyphenationFrequency" tools:targetApi="m">full</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.Paragraph" parent="Widget.Pallax.TextView">
+    <item name="android:justificationMode" tools:targetApi="o">inter_word</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.Paragraph.Fix" parent="Widget.Pallax.TextView.Paragraph">
+    <item name="android:breakStrategy" tools:targetApi="m">simple</item>
+  </style>
+
+  <style name="Base.Pallax.TextView.Toolbar" parent="Widget.Pallax.TextView">
+    <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.Toolbar" parent="Base.Pallax.TextView.Toolbar">
+    <!-- Untranslated text like the app name doesn't need medium font if the system font is used
+    as fallback because they will already appear medium with the textStyle attribute set to bold
+    for these locales. -->
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <style name="Base.Pallax.TextView.Category" parent="Widget.Pallax.TextView">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginStart">72dp</item>
+    <item name="android:paddingTop">10dp</item>
+    <item name="android:paddingBottom">3dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceTitleMedium</item>
+    <item name="android:textColor">?attr/colorSecondary</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.Category" parent="Base.Pallax.TextView.Category">
+    <item name="android:fontFamily">@font/jost_medium</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.ListItem.OverLine" parent="Widget.Pallax.TextView">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:letterSpacing">0.1</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:alpha">0.5</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodySmall</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.ListItem.Title" parent="Widget.Pallax.TextView">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <!-- <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item> -->
+    <!-- Too large, instead use slightly smaller custom size -->
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <style name="Widget.Pallax.TextView.ListItem.Description" parent="Widget.Pallax.TextView">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:alpha">0.5</item>
+  </style>
+
+  <!-- TextAppearance -->
+
+  <style name="TextAppearance.Pallax.Toolbar.Title" parent="TextAppearance.Material3.TitleLarge">
+    <item name="fontFamily">@font/jost_medium</item>
+  </style>
+
+  <style name="TextAppearance.Pallax.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+    <item name="fontFamily">@font/jost_book</item>
+  </style>
+
+  <style name="TextAppearance.Pallax.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+    <item name="fontFamily">@font/jost_book</item>
+  </style>
+
+  <style name="TextAppearance.Pallax.Tooltip" parent="TextAppearance.MaterialComponents.Tooltip">
+    <item name="android:textColor">?android:attr/colorBackground</item>
+    <item name="fontFamily">@font/jost_book</item>
+  </style>
+
+</resources>

@@ -1,0 +1,21 @@
+These live wallpapers are based on the original Pallax live wallpaper collection of the Google Pixel 4 and the leaked (but never officially released) Material You static wallpaper collection of the Pixel 6, extended with additional wallpapers from Chrome OS.
+They are completely recreated from scratch, nothing except the look is taken from the original.
+
+<b>Advantages over the original:</b>
+
+- Permanent animation (when tilting the device) is optional and customizable
+- No battery-hungry 3D engine
+- Support for Android 11 zoom effect and Android 12 color extraction (Material You)
+- Optional zoom effect when unlocking the device
+- Suitable for less powerful devices with power-efficient and optional animations
+- Improved text contrast (dark text for light themes instead of white text with shadow)
+- Also suitable for larger devices like tablets (scaling option available)
+- Many additional customization options
+
+<b>Not enough options?</b>
+
+There won't be many more wallpapers added to this app in the future. Pallax is about pallax-styled, flat-shaped (non-3D) original Google Pixel wallpapers (with a few exceptions), these criteria are not met by many of them out there.
+Every wallpaper design available in this app required days or weeks to implement, it's not as easy as you might think (shape extraction, dark version creation, optimization for parallax rendering and much more).
+When I find enough time beside university, I will expand the Material You collection and the collection of wallpapers by Anna Kövecses.
+
+So please be patient and watch HowToMen, an amazing tech YouTube channel for Android fans, while waiting for the next update!

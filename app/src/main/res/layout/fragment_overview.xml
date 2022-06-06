@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of Pallax Android.
+  ~
+  ~ Pallax Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Pallax Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Pallax Android. If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (c) 2022 by Patrick Zedler
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/app_bar_overview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize">
+
+      <FrameLayout
+        android:id="@+id/frame_overview_close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="20dp"
+        android:background="?attr/actionBarItemBackground"
+        android:clickable="true"
+        android:gravity="center"
+        android:layout_gravity="start|center_vertical"
+        android:contentDescription="@string/action_close"
+        android:tooltipText="@string/action_close"
+        android:focusable="true"
+        tools:targetApi="o">
+
+        <ImageView
+          android:id="@+id/image_overview_close"
+          style="@style/Widget.Pallax.ImageView.Icon.Navigation"
+          android:importantForAccessibility="no"
+          android:src="@drawable/ic_round_close" />
+
+      </FrameLayout>
+
+      <FrameLayout
+        android:id="@+id/frame_overview_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_gravity="start|center_vertical">
+
+        <ImageView
+          android:id="@+id/image_overview_logo"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:layout_gravity="center"
+          android:importantForAccessibility="no"
+          android:src="@drawable/ic_round_doodle_anim" />
+
+      </FrameLayout>
+
+      <TextView
+        style="@style/Widget.Pallax.TextView.Toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:text="@string/app_name" />
+
+      <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_overview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:menu="@menu/menu_main" />
+
+    </FrameLayout>
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/scroll_overview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/constraint_overview"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:id="@+id/linear_overview_container_cards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="@dimen/max_content_width"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+          style="@style/Widget.Pallax.Card.Text"
+          app:contentPaddingBottom="8dp"
+          app:contentPaddingLeft="0dp"
+          app:contentPaddingRight="0dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.Paragraph"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="16dp"
+              android:layout_marginEnd="16dp"
+              android:layout_marginBottom="4dp"
+              android:textColor="?attr/colorOnSurfaceVariant"
+              android:text="@string/wallpaper_description" />
+
+            <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_gravity="end"
+              android:layout_marginEnd="12dp">
+
+              <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_overview_info"
+                style="@style/Widget.Pallax.Button.TextButton"
+                android:text="@string/action_howto" />
+
+              <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_overview_help"
+                style="@style/Widget.Pallax.Button.TextButton"
+                android:layout_marginStart="8dp"
+                android:text="@string/action_help" />
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/linear_overview_container_items"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/linear_overview_container_cards"
+        app:layout_constraintWidth_max="@dimen/max_content_width"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+          android:id="@+id/linear_overview_appearance"
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon.Clickable"
+          android:layout_marginTop="8dp">
+
+          <ImageView
+            android:id="@+id/image_overview_appearance"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:src="@drawable/ic_round_palette_anim"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:text="@string/appearance_title" />
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/appearance_description" />
+
+          </LinearLayout>
+
+          <ImageView
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon.End"
+            android:src="@drawable/ic_round_navigate_next"
+            tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/linear_overview_parallax"
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon.Clickable">
+
+          <ImageView
+            android:id="@+id/image_overview_parallax"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:src="@drawable/ic_round_swap_horiz_anim"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:text="@string/parallax_title" />
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/parallax_description" />
+
+          </LinearLayout>
+
+          <ImageView
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon.End"
+            android:src="@drawable/ic_round_navigate_next"
+            tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/linear_overview_size"
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon.Clickable">
+
+          <ImageView
+            android:id="@+id/image_overview_size"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:src="@drawable/ic_round_filter_center_focus_anim"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:text="@string/zoom_title" />
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/zoom_description" />
+
+          </LinearLayout>
+
+          <ImageView
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon.End"
+            android:src="@drawable/ic_round_navigate_next"
+            tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/linear_overview_other"
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon.Clickable">
+
+          <ImageView
+            android:id="@+id/image_overview_other"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:src="@drawable/ic_round_settings"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:text="@string/other_title" />
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/other_description" />
+
+          </LinearLayout>
+
+          <ImageView
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon.End"
+            android:src="@drawable/ic_round_navigate_next"
+            tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/linear_overview_about"
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon.Clickable">
+
+          <ImageView
+            android:id="@+id/image_overview_about"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:src="@drawable/ic_round_info_outline_anim"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:text="@string/about_title" />
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/about_description" />
+
+          </LinearLayout>
+
+          <ImageView
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon.End"
+            android:src="@drawable/ic_round_navigate_next"
+            tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

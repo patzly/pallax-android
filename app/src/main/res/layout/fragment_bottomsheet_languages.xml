@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of Pallax Android.
+  ~
+  ~ Pallax Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Pallax Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Pallax Android. If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (c) 2022 by Patrick Zedler
+  -->
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/linear_languages_container"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+      android:id="@+id/text_languages_title"
+      style="@style/Widget.Pallax.TextView.Toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:singleLine="true" />
+
+    <TextView
+      android:id="@+id/text_languages_description"
+      style="@style/Widget.Pallax.TextView.ListItem.Description"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="4dp"
+      android:textAppearance="?attr/textAppearanceBodyMedium"
+      android:visibility="gone"
+      android:maxLines="30" />
+
+  </LinearLayout>
+
+  <com.google.android.material.divider.MaterialDivider
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_languages"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:clipToPadding="false"
+    android:overScrollMode="ifContentScrolls"
+    android:scrollbars="none" />
+
+</LinearLayout>

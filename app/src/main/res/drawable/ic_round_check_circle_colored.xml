@@ -1,0 +1,33 @@
+<!--
+  ~ This file is part of Pallax Android.
+  ~
+  ~ Pallax Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Pallax Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Pallax Android. If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (c) 2022 by Patrick Zedler
+  -->
+
+<vector
+  android:autoMirrored="true"
+  android:height="24dp"
+  android:viewportHeight="24"
+  android:viewportWidth="24"
+  android:width="24dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <path
+    android:fillColor="?attr/colorPrimary"
+    android:pathData="M12,2C6.48,2 2,6.48 2,12 2,17.52 6.48,22 12,22 17.52,22 22,17.52 22,12 22,6.48 17.52,2 12,2Z" />
+  <path
+    android:fillColor="?attr/colorOnPrimary"
+    android:pathData="M17.586,6.998C17.331,6.998 17.076,7.094 16.881,7.289L10,14.17L7.109,11.289C6.719,10.899 6.089,10.899 5.699,11.289C5.309,11.679 5.309,12.309 5.699,12.699L9.289,16.289C9.679,16.679 10.319,16.679 10.699,16.289L18.289,8.699C18.679,8.309 18.679,7.679 18.289,7.289C18.094,7.094 17.841,6.998 17.586,6.998z" />
+</vector>

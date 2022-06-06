@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of Pallax Android.
+  ~
+  ~ Pallax Android is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Pallax Android is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Pallax Android. If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright (c) 2022 by Patrick Zedler
+  -->
+
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.patrickzedler.pallax">
+
+  <uses-feature
+    android:name="android.software.live_wallpaper"
+    android:required="true" />
+
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.MAIN" />
+      <category android:name="android.intent.category.HOME" />
+    </intent>
+  </queries>
+
+  <application
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.Pallax"
+    android:allowBackup="false">
+
+    <activity
+      android:name=".activity.LauncherActivity"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name=".activity.MainActivity" />
+
+    <activity
+      android:name=".activity.SettingsActivity"
+      android:exported="true" />
+
+    <service
+      android:directBootAware="true"
+      android:label="@string/app_name"
+      android:name=".service.LiveWallpaperService"
+      android:permission="android.permission.BIND_WALLPAPER"
+      android:exported="true"
+      tools:targetApi="n">
+      <intent-filter>
+        <action android:name="android.service.wallpaper.WallpaperService" />
+      </intent-filter>
+      <meta-data
+        android:name="android.service.wallpaper"
+        android:resource="@xml/wallpaper" />
+    </service>
+
+  </application>
+
+</manifest>
