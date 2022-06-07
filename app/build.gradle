@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Pallax Android. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright (c) 2019-2022 by Patrick Zedler
+ * Copyright (c) 2022 by Patrick Zedler
  */
 
 plugins {
@@ -35,7 +35,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 32
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0.0-beta1"
     }
 
     applicationVariants.all { variant ->

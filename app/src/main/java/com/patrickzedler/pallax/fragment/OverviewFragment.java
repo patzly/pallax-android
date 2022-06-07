@@ -61,7 +61,7 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     activity = (MainActivity) requireActivity();
 
-    viewUtilLogo = new ViewUtil(1010);
+    viewUtilLogo = new ViewUtil(500);
 
     SystemBarBehavior systemBarBehavior = new SystemBarBehavior(activity);
     systemBarBehavior.setAppBar(binding.appBarOverview);

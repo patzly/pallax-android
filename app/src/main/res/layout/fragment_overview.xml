@@ -45,8 +45,7 @@
         android:layout_gravity="start|center_vertical"
         android:contentDescription="@string/action_close"
         android:tooltipText="@string/action_close"
-        android:focusable="true"
-        tools:targetApi="o">
+        android:focusable="true">
 
         <ImageView
           android:id="@+id/image_overview_close"
@@ -68,11 +67,12 @@
 
         <ImageView
           android:id="@+id/image_overview_logo"
-          android:layout_width="32dp"
-          android:layout_height="32dp"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
           android:layout_gravity="center"
           android:importantForAccessibility="no"
-          android:src="@drawable/ic_round_doodle_anim" />
+          android:src="@drawable/ic_round_view_carousel_anim"
+          app:tint="?attr/colorTertiary" />
 
       </FrameLayout>
 

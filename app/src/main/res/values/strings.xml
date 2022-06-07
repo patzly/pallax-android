@@ -86,7 +86,7 @@
 
   <string name="appearance_title">Appearance</string>
   <string name="appearance_description">Position &amp; color options</string>
-  <string name="appearance_info">All settings on this page are linked to the currently selected wallpaper for light or dark mode. Switch between the modes to customize them separately.</string>
+  <string name="appearance_info">All settings on this page are linked to the currently selected wallpaper for light or dark mode. Switch between the modes to customize them individually.</string>
   <string name="appearance_position_category">Position &amp; size</string>
   <string name="appearance_scale">Scale</string>
   <string name="appearance_scale_description">Useful for big screens and densities</string>
