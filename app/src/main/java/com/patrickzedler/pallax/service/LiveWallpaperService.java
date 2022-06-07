@@ -684,12 +684,7 @@ public class LiveWallpaperService extends WallpaperService {
       final SurfaceHolder surfaceHolder = getSurfaceHolder();
       Canvas canvas = null;
       try {
-        if (VERSION.SDK_INT >= VERSION_CODES.O) {
-          canvas = surfaceHolder.lockHardwareCanvas();
-        } else {
-          canvas = surfaceHolder.lockCanvas();
-        }
-
+        canvas = surfaceHolder.lockHardwareCanvas();
         if (canvas != null) {
           canvas.drawColor(Color.BLACK);
 

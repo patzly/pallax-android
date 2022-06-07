@@ -113,9 +113,6 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
       });
     }
 
-    boolean isGpuAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-    binding.cardOverviewGpu.setVisibility(isGpuAvailable ? View.GONE : View.VISIBLE);
-
     ViewUtil.setOnClickListeners(
         this,
         binding.buttonOverviewInfo,

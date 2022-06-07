@@ -196,7 +196,6 @@
   <string name="msg_permission_granted">Permission granted successfully!</string>
   <string name="msg_permission_denied">Permission denied</string>
   <string name="msg_replace_or_keep">Do you want the stored wallpaper in %1$s mode to be kept or should it be replaced by your current static wallpaper?</string>
-  <string name="msg_gpu_warning">Hardware acceleration is only available for live wallpapers starting with Android 8. The wallpaper animations might therefore be very jerky.</string>
 
   <!-- LICENSES -->
 

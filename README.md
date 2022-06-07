@@ -24,7 +24,7 @@ Pallax Android is an open-source Android app that lets you convert your current 
 
 ## Compatibility
 
-Pallax Android requires at least Android 5.0 Lollipop on your device. Because bitmap rendering is very slow without hardware acceleration, I strongly recommend at least Android 8 for a smooth experience because hardware acceleration for surfaces is not available on lower Android versions.
+Pallax Android requires at least Android 8.0 Oreo on your device because hardware acceleration for surfaces is not available on lower Android versions.
 
 ## Contribution
 
