@@ -560,11 +560,6 @@ public class LiveWallpaperService extends WallpaperService {
         BitmapDrawable drawable = BitmapUtil.getBitmapDrawable(context, base64);
         wallpaperDrawable = new WallpaperDrawable(context, drawable);
 
-        sharedPrefs.edit()
-            .putInt(PREF.WALLPAPER_WIDTH + suffix, drawable.getIntrinsicWidth())
-            .putInt(PREF.WALLPAPER_HEIGHT + suffix, drawable.getIntrinsicHeight())
-            .apply();
-
         if (VERSION.SDK_INT >= VERSION_CODES.O_MR1) {
           Color primary = Color.valueOf(
               sharedPrefs.getInt(PREF.COLOR_PRIMARY + suffix, DEF.COLOR)

@@ -343,7 +343,7 @@ public class AppearanceFragment extends BaseFragment
     }
   }
 
-  private void updateDarkModeDependencies() {
+  public void updateDarkModeDependencies() {
     boolean isDarkMode = activity.isWallpaperDarkMode();
     suffix = Constants.getDarkSuffix(isDarkMode);
 

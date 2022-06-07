@@ -78,6 +78,7 @@ import com.patrickzedler.pallax.NavMainDirections;
 import com.patrickzedler.pallax.R;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
 import com.patrickzedler.pallax.databinding.ActivityMainBinding;
+import com.patrickzedler.pallax.drawable.WallpaperDrawable;
 import com.patrickzedler.pallax.fragment.AppearanceFragment;
 import com.patrickzedler.pallax.fragment.BaseFragment;
 import com.patrickzedler.pallax.fragment.dialog.ApplyBottomSheetDialogFragment;
@@ -418,11 +419,16 @@ public class MainActivity extends AppCompatActivity {
       String otherBase64 = sharedPrefs.getString(PREF.WALLPAPER + otherSuffix, null);
 
       SharedPreferences.Editor editor = sharedPrefs.edit();
+
       editor.putString(PREF.WALLPAPER + suffix, base64);
+      editor.putInt(PREF.WALLPAPER_WIDTH + suffix, drawable.getIntrinsicWidth());
+      editor.putInt(PREF.WALLPAPER_HEIGHT + suffix, drawable.getIntrinsicHeight());
 
       boolean saveOtherMode = overwriteBothModes || otherBase64 == null;
       if (saveOtherMode) {
         editor.putString(PREF.WALLPAPER + otherSuffix, base64);
+        editor.putInt(PREF.WALLPAPER_WIDTH + otherSuffix, drawable.getIntrinsicWidth());
+        editor.putInt(PREF.WALLPAPER_HEIGHT + otherSuffix, drawable.getIntrinsicHeight());
       }
 
       if (VERSION.SDK_INT >= VERSION_CODES.O_MR1) {
@@ -432,6 +438,15 @@ public class MainActivity extends AppCompatActivity {
       }
       editor.apply();
 
+      // The other values (at the top) have to be stored first to calculate default scale
+      new Handler(Looper.getMainLooper()).postDelayed(() -> {
+        float scale = WallpaperDrawable.getDefaultScale(this, isDarkMode);
+        editor.putFloat(PREF.SCALE + suffix, scale).apply();
+        if (saveOtherMode) {
+          editor.putFloat(PREF.SCALE + otherSuffix, scale).apply();
+        }
+      }, 500);
+
       new Handler(Looper.getMainLooper()).postDelayed(() -> {
         BaseFragment current = getCurrentFragment();
         if (current instanceof AppearanceFragment) {
@@ -440,6 +455,7 @@ public class MainActivity extends AppCompatActivity {
           appearance.updatePreview(isDarkMode);
           appearance.loadPreview(!isDarkMode);
           appearance.updatePreview(!isDarkMode);
+          appearance.updateDarkModeDependencies();
         }
       }, 1000);
     }
