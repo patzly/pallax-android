@@ -87,7 +87,8 @@ public final class Constants {
     public static final float SCALE = 1;
     public static final int STATIC_OFFSET = 0;
     public static final int COLOR = Color.BLACK;
-    public static final int DIMMING = 0;
+    public static final int DIMMING_LIGHT = 0;
+    public static final int DIMMING_DARK = -2;
     public static final boolean USE_DARK_TEXT = false;
     public static final boolean FORCE_LIGHT_TEXT = false;
     public static final boolean USE_DARK_LAUNCHER = false;

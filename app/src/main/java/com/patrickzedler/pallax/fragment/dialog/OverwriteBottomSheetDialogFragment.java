@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.R;
@@ -78,7 +79,8 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     previewHeight = (int) (previewWidth * screenRatio);
     scaleRatio = ((float) previewHeight) / ((float) screenHeight);
 
-    String suffix = activity.getDarkSuffix();
+    boolean isDarkMode = activity.isWallpaperDarkMode();
+    String suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
 
     scale = getSharedPrefs().getFloat(
         PREF.SCALE + suffix,
@@ -89,7 +91,8 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     offset = getSharedPrefs().getInt(PREF.STATIC_OFFSET + suffix, DEF.STATIC_OFFSET);
     offset *= scaleRatio;
 
-    dimming = getSharedPrefs().getInt(PREF.DIMMING + suffix, DEF.DIMMING) / 10f;
+    dimming = getSharedPrefs().getInt(
+        PREF.DIMMING + suffix, isDarkMode ? DEF.DIMMING_DARK : DEF.DIMMING_LIGHT) / 10f;
 
     loadCurrent();
 

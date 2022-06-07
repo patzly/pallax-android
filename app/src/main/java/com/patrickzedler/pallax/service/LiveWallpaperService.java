@@ -512,7 +512,9 @@ public class LiveWallpaperService extends WallpaperService {
       String suffix = isDark ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
 
       correction = sharedPrefs.getInt(PREF.STATIC_OFFSET + suffix, DEF.STATIC_OFFSET);
-      dimming = sharedPrefs.getInt(PREF.DIMMING + suffix, DEF.DIMMING);
+      dimming = sharedPrefs.getInt(
+          PREF.DIMMING + suffix, isDark ? DEF.DIMMING_DARK : DEF.DIMMING_LIGHT
+      );
       darkText = sharedPrefs.getBoolean(PREF.USE_DARK_TEXT + suffix, DEF.USE_DARK_TEXT);
       lightText = sharedPrefs.getBoolean(PREF.FORCE_LIGHT_TEXT + suffix, DEF.FORCE_LIGHT_TEXT);
       darkLauncher = sharedPrefs.getBoolean(

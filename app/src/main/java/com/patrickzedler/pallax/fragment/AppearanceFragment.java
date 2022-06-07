@@ -337,7 +337,8 @@ public class AppearanceFragment extends BaseFragment
   }
 
   private void updateDarkModeDependencies() {
-    suffix = activity.isWallpaperDarkMode() ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+    boolean isDarkMode = activity.isWallpaperDarkMode();
+    suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
 
     areListenersActive = false;
 
@@ -352,7 +353,9 @@ public class AppearanceFragment extends BaseFragment
     );
 
     binding.sliderAppearanceDimming.setValue(
-        getSharedPrefs().getInt(PREF.DIMMING + suffix, DEF.DIMMING)
+        getSharedPrefs().getInt(
+            PREF.DIMMING + suffix, isDarkMode ? DEF.DIMMING_DARK : DEF.DIMMING_LIGHT
+        )
     );
 
     binding.switchAppearanceDarkText.setChecked(
@@ -430,7 +433,9 @@ public class AppearanceFragment extends BaseFragment
     float offset = getSharedPrefs().getInt(PREF.STATIC_OFFSET + suffix, DEF.STATIC_OFFSET);
     offset *= scaleRatio;
 
-    int dimming = getSharedPrefs().getInt(PREF.DIMMING + suffix, DEF.DIMMING);
+    int dimming = getSharedPrefs().getInt(
+        PREF.DIMMING + suffix, isDarkMode ? DEF.DIMMING_DARK : DEF.DIMMING_LIGHT
+    );
 
     if (isDarkMode) {
       if (wallpaperDrawableDark != null) {
