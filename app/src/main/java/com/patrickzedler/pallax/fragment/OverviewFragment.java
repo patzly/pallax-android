@@ -19,7 +19,6 @@
 
 package com.patrickzedler.pallax.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -96,14 +95,12 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
     binding.frameOverviewClose.setVisibility(shouldLogoBeVisible ? View.GONE : View.VISIBLE);
     binding.frameOverviewLogo.setVisibility(shouldLogoBeVisible ? View.VISIBLE : View.GONE);
     if (activity.shouldLogoBeVisibleOnOverviewPage()) {
-      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-        binding.appBarOverview.setOnClickListener(v -> {
-          if (viewUtilLogo.isClickEnabled()) {
-            ViewUtil.startIcon(binding.imageOverviewLogo);
-            performHapticClick();
-          }
-        });
-      }
+      binding.appBarOverview.setOnClickListener(v -> {
+        if (viewUtilLogo.isClickEnabled()) {
+          ViewUtil.startIcon(binding.imageOverviewLogo);
+          performHapticClick();
+        }
+      });
     } else {
       binding.frameOverviewClose.setOnClickListener(v -> {
         if (getViewUtil().isClickEnabled()) {
@@ -129,11 +126,10 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
   public void onClick(View v) {
     int id = v.getId();
     if (id == R.id.button_overview_info && getViewUtil().isClickEnabled()) {
-      activity.showTextBottomSheet(R.raw.information, R.string.title_info);
+      activity.showTextBottomSheet(R.raw.howto, R.string.action_howto);
       performHapticClick();
     } else if (id == R.id.button_overview_help && getViewUtil().isClickEnabled()) {
       activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      // startActivity(new Intent(activity, TestActivity.class));
       performHapticClick();
     } else if (id == R.id.linear_overview_appearance && getViewUtil().isClickEnabled()) {
       navigate(OverviewFragmentDirections.actionOverviewToAppearance());

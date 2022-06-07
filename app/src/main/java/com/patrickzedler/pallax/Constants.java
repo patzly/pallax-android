@@ -28,6 +28,10 @@ public final class Constants {
   public static final String SUFFIX_LIGHT = "_light";
   public static final String SUFFIX_DARK = "_dark";
 
+  public static String getDarkSuffix(boolean isDark) {
+    return isDark ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+  }
+
   public static final class PREF {
 
     // Appearance

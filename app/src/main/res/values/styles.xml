@@ -18,7 +18,7 @@
   ~ Copyright (c) 2022 by Patrick Zedler
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
   <!-- For languages not supported by Jost*, the system font will be used as fallback.
        If the system font is used, the medium variant of Jost* won't be replaced by a medium/bold
@@ -321,16 +321,16 @@
     <item name="android:textColor">?attr/colorOnBackground</item>
     <item name="android:textAlignment">viewStart</item>
     <item name="android:fontFamily">@font/jost_book</item>
-    <item name="android:breakStrategy" tools:targetApi="m">high_quality</item>
-    <item name="android:hyphenationFrequency" tools:targetApi="m">full</item>
+    <item name="android:breakStrategy" >high_quality</item>
+    <item name="android:hyphenationFrequency">full</item>
   </style>
 
   <style name="Widget.Pallax.TextView.Paragraph" parent="Widget.Pallax.TextView">
-    <item name="android:justificationMode" tools:targetApi="o">inter_word</item>
+    <item name="android:justificationMode">inter_word</item>
   </style>
 
   <style name="Widget.Pallax.TextView.Paragraph.Fix" parent="Widget.Pallax.TextView.Paragraph">
-    <item name="android:breakStrategy" tools:targetApi="m">simple</item>
+    <item name="android:breakStrategy">simple</item>
   </style>
 
   <style name="Base.Pallax.TextView.Toolbar" parent="Widget.Pallax.TextView">

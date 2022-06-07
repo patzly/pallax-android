@@ -29,6 +29,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
@@ -48,6 +49,7 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.RawRes;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -224,8 +226,7 @@ public class MainActivity extends AppCompatActivity {
           } else {
             Snackbar snackbar = getSnackbar(R.string.msg_permission_denied, Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.action_retry, v -> {
-              if (VERSION.SDK_INT >= VERSION_CODES.M
-                  && shouldShowRequestPermissionRationale(permission.READ_EXTERNAL_STORAGE)) {
+              if (shouldShowRequestPermissionRationale(permission.READ_EXTERNAL_STORAGE)) {
                 navigate(NavMainDirections.actionGlobalPermissionDialog());
               } else {
                 requestPermission();
@@ -276,23 +277,17 @@ public class MainActivity extends AppCompatActivity {
     );
 
     binding.fabMain.setOnClickListener(v -> {
-      if (viewUtil.isClickEnabled()) {
-        performHapticHeavyClick();
-        String base64 = sharedPrefs.getString(PREF.WALLPAPER + getDarkSuffix(), null);
-        if (base64 != null) {
-          // Not working correctly, same wallpaper seems to return different base64
-          /*if (ActivityCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)
-              == PackageManager.PERMISSION_GRANTED) {
-            WallpaperManager manager = WallpaperManager.getInstance(this);
-            if (base64.equals(BitmapUtil.getBase64((BitmapDrawable) manager.getDrawable()))) {
-              setWallpaper(false);
-              return;
-            }
-          }*/
-          navigate(NavMainDirections.actionGlobalOverwriteDialog());
-        } else {
-          setWallpaper(true);
-        }
+      if (viewUtil.isClickDisabled()) {
+        return;
+      }
+      performHapticHeavyClick();
+      boolean isDarkMode = isWallpaperDarkMode();
+      String suffix = Constants.getDarkSuffix(isDarkMode);
+      String base64 = sharedPrefs.getString(PREF.WALLPAPER + suffix, null);
+      if (base64 != null) {
+        navigate(NavMainDirections.actionGlobalOverwriteDialog());
+      } else {
+        setWallpaper(true, false);
       }
     });
 
@@ -359,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public void applyOverrideConfiguration(Configuration overrideConfiguration) {
-    if (!runAsSuperClass && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
+    if (!runAsSuperClass) {
       overrideConfiguration.setLocale(LocaleUtil.getUserLocale(this, sharedPrefs));
     }
     super.applyOverrideConfiguration(overrideConfiguration);
@@ -374,12 +369,21 @@ public class MainActivity extends AppCompatActivity {
     requestPermissionLauncher.launch(permission.READ_EXTERNAL_STORAGE);
   }
 
-  public void setWallpaper(boolean shouldSave) {
+  public boolean isCurrentStaticWallpaper() {
+    return WallpaperManager.getInstance(this).getWallpaperInfo() == null;
+  }
+
+  public void setWallpaper(boolean shouldSave, boolean overwriteBothModes) {
     if (shouldSave) {
       if (ContextCompat.checkSelfPermission(this,
           permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
       ) {
-        saveWallpaper();
+        if (isCurrentStaticWallpaper()) {
+          saveWallpaper(overwriteBothModes);
+        } else {
+          showSnackbar(getSnackbar(R.string.msg_live_not_supported, Snackbar.LENGTH_LONG));
+          return;
+        }
       } else {
         navigate(NavMainDirections.actionGlobalPermissionDialog());
         return;
@@ -398,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void saveWallpaper() {
+  private void saveWallpaper(boolean overwriteBothModes) {
     if (ActivityCompat.checkSelfPermission(this, permission.READ_EXTERNAL_STORAGE)
         == PackageManager.PERMISSION_DENIED) {
       return;
@@ -407,34 +411,52 @@ public class MainActivity extends AppCompatActivity {
     Drawable drawable = manager.getDrawable();
     if (drawable != null) {
       boolean isDarkMode = isWallpaperDarkMode();
-      String suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+      String suffix = Constants.getDarkSuffix(isDarkMode);
+      String otherSuffix = Constants.getDarkSuffix(!isDarkMode);
+
+      String base64 = BitmapUtil.getBase64((BitmapDrawable) drawable);
+      String otherBase64 = sharedPrefs.getString(PREF.WALLPAPER + otherSuffix, null);
 
       SharedPreferences.Editor editor = sharedPrefs.edit();
-      editor.putString(PREF.WALLPAPER + suffix, BitmapUtil.getBase64((BitmapDrawable) drawable));
+      editor.putString(PREF.WALLPAPER + suffix, base64);
 
-      BaseFragment current = getCurrentFragment();
-      if (current instanceof AppearanceFragment) {
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-          ((AppearanceFragment) current).loadPreview(isDarkMode);
-          ((AppearanceFragment) current).updatePreview(isDarkMode);
-        }, 1000);
+      boolean saveOtherMode = overwriteBothModes || otherBase64 == null;
+      if (saveOtherMode) {
+        editor.putString(PREF.WALLPAPER + otherSuffix, base64);
       }
 
       if (VERSION.SDK_INT >= VERSION_CODES.O_MR1) {
         WallpaperColors colors = manager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
-        editor.putInt(PREF.COLOR_PRIMARY + suffix, colors.getPrimaryColor().toArgb());
-        if (colors.getSecondaryColor() != null) {
-          editor.putInt(PREF.COLOR_SECONDARY + suffix, colors.getSecondaryColor().toArgb());
-        } else {
-          editor.remove(PREF.COLOR_SECONDARY + suffix);
-        }
-        if (colors.getTertiaryColor() != null) {
-          editor.putInt(PREF.COLOR_TERTIARY + suffix, colors.getTertiaryColor().toArgb());
-        } else {
-          editor.remove(PREF.COLOR_TERTIARY + suffix);
-        }
+        saveWallpaperColors(editor, colors, suffix);
+        saveWallpaperColors(editor, colors, otherSuffix);
       }
       editor.apply();
+
+      new Handler(Looper.getMainLooper()).postDelayed(() -> {
+        BaseFragment current = getCurrentFragment();
+        if (current instanceof AppearanceFragment) {
+          AppearanceFragment appearance = (AppearanceFragment) current;
+          appearance.loadPreview(isDarkMode);
+          appearance.updatePreview(isDarkMode);
+          appearance.loadPreview(!isDarkMode);
+          appearance.updatePreview(!isDarkMode);
+        }
+      }, 1000);
+    }
+  }
+
+  @RequiresApi(api = VERSION_CODES.O_MR1)
+  private void saveWallpaperColors(Editor editor, WallpaperColors colors, String suffix) {
+    editor.putInt(PREF.COLOR_PRIMARY + suffix, colors.getPrimaryColor().toArgb());
+    if (colors.getSecondaryColor() != null) {
+      editor.putInt(PREF.COLOR_SECONDARY + suffix, colors.getSecondaryColor().toArgb());
+    } else {
+      editor.remove(PREF.COLOR_SECONDARY + suffix);
+    }
+    if (colors.getTertiaryColor() != null) {
+      editor.putInt(PREF.COLOR_TERTIARY + suffix, colors.getTertiaryColor().toArgb());
+    } else {
+      editor.remove(PREF.COLOR_TERTIARY + suffix);
     }
   }
 
@@ -525,10 +547,6 @@ public class MainActivity extends AppCompatActivity {
     }
     int flags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
     return mode == MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
-  }
-
-  public String getDarkSuffix() {
-    return isWallpaperDarkMode() ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
   }
 
   public void reset() {

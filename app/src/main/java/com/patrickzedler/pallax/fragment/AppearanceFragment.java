@@ -221,7 +221,8 @@ public class AppearanceFragment extends BaseFragment
       binding.linearAppearanceDarkLauncher.setVisibility(View.VISIBLE);
     }
 
-    updateDarkModeDependencies();
+    // will be called in onResume() for updating correctly when system dark mode changes
+    // updateDarkModeDependencies();
 
     // Wallpaper previews
     loadPreview(false);
@@ -243,6 +244,12 @@ public class AppearanceFragment extends BaseFragment
         binding.switchAppearanceLightText,
         binding.switchAppearanceDarkLauncher
     );
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    updateDarkModeDependencies();
   }
 
   @Override
@@ -338,7 +345,7 @@ public class AppearanceFragment extends BaseFragment
 
   private void updateDarkModeDependencies() {
     boolean isDarkMode = activity.isWallpaperDarkMode();
-    suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+    suffix = Constants.getDarkSuffix(isDarkMode);
 
     areListenersActive = false;
 
@@ -401,7 +408,7 @@ public class AppearanceFragment extends BaseFragment
       binding.cardAppearanceWallpaperLight.setLayoutParams(paramsLight);
     }
 
-    String suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+    String suffix = Constants.getDarkSuffix(isDarkMode);
     String base64 = getSharedPrefs().getString(PREF.WALLPAPER + suffix, DEF.WALLPAPER);
     if (base64 != null) {
       BitmapDrawable drawable = BitmapUtil.getBitmapDrawable(activity, base64);
@@ -422,7 +429,7 @@ public class AppearanceFragment extends BaseFragment
   }
 
   public void updatePreview(boolean isDarkMode) {
-    suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+    suffix = Constants.getDarkSuffix(isDarkMode);
 
     float scale = getSharedPrefs().getFloat(
         PREF.SCALE + suffix,

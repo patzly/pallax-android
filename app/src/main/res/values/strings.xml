@@ -38,7 +38,6 @@
   <!-- TITLES -->
 
   <string name="title_permission_request">Permission required</string>
-  <string name="title_info">Information</string>
   <string name="title_apply_changes">Apply changes</string>
   <string name="title_feedback">Feedback</string>
   <string name="title_licenses">Open source licenses</string>
@@ -55,6 +54,7 @@
 
   <string name="action_keep">Keep</string>
   <string name="action_replace">Replace</string>
+  <string name="action_replace_all">Replace light and dark</string>
   <string name="action_howto">How it works</string>
   <string name="action_close">Close</string>
   <string name="action_cancel">Cancel</string>
@@ -195,6 +195,7 @@
   <string name="msg_permission_request">Pallax needs media read permission for accessing the current wallpaper. Please tap the button below to grant it.</string>
   <string name="msg_permission_granted">Permission granted successfully!</string>
   <string name="msg_permission_denied">Permission denied</string>
+  <string name="msg_live_not_supported">First, please set a static image as home screen background so Pallax can use it. Currently you have a live wallpaper applied.</string>
   <string name="msg_replace_or_keep">Do you want the stored wallpaper in %1$s mode to be kept or should it be replaced by your current static wallpaper?</string>
 
   <!-- LICENSES -->

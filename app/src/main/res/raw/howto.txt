@@ -1,0 +1,8 @@
+1. Make sure you have set a static image as your home screen background. A live wallpaper will not work.
+2. Tap on "Parallaxify" and apply the new live wallpaper to your home screen.
+3. Customize the live wallpaper experience with the options in this app. The appearance settings are linked separately to light and dark mode. Switch between the modes to customize them individually. Make sure you set wallpaper mode back to auto if you want it to be system-dependent.
+
+Optionally:
+4. Set another static image as your home screen background.
+5. In appearance settings select the wallpaper you want to replace, either light or dark mode or change your device's theme to match the mode you want to replace.
+6. Repeat step 2 and 3. Make sure you set wallpaper mode back to auto if you want it to be system-dependent.

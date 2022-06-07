@@ -27,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
@@ -42,13 +43,16 @@ import com.patrickzedler.pallax.databinding.FragmentBottomsheetOverwriteBinding;
 import com.patrickzedler.pallax.drawable.WallpaperDrawable;
 import com.patrickzedler.pallax.util.BitmapUtil;
 import com.patrickzedler.pallax.util.SystemUiUtil;
+import com.patrickzedler.pallax.util.ViewUtil;
 
-public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFragment {
+public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFragment
+    implements OnClickListener {
 
   private static final String TAG = "OverwriteBottomSheet";
 
   private FragmentBottomsheetOverwriteBinding binding;
   private MainActivity activity;
+  boolean isDarkMode;
   int previewWidth, previewHeight;
   float scaleRatio;
   float scale, offset, dimming;
@@ -79,8 +83,8 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     previewHeight = (int) (previewWidth * screenRatio);
     scaleRatio = ((float) previewHeight) / ((float) screenHeight);
 
-    boolean isDarkMode = activity.isWallpaperDarkMode();
-    String suffix = isDarkMode ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
+    isDarkMode = activity.isWallpaperDarkMode();
+    String suffix = Constants.getDarkSuffix(isDarkMode);
 
     scale = getSharedPrefs().getFloat(
         PREF.SCALE + suffix,
@@ -105,16 +109,12 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
       binding.cardOverwriteNew.setVisibility(View.GONE);
     }
 
-    binding.buttonOverwriteKeep.setOnClickListener(v -> {
-      activity.setWallpaper(false);
-      dismiss();
-    });
-
-    binding.buttonOverwriteReplace.setOnClickListener(v -> {
-      performHapticClick();
-      activity.setWallpaper(true);
-      dismiss();
-    });
+    ViewUtil.setOnClickListeners(
+        this,
+        binding.buttonOverwriteKeep,
+        binding.buttonOverwriteReplace,
+        binding.buttonOverwriteReplaceAll
+    );
 
     return binding.getRoot();
   }
@@ -125,11 +125,27 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     binding = null;
   }
 
+  @Override
+  public void onClick(View v) {
+    int id = v.getId();
+    if (id == R.id.button_overwrite_keep && getViewUtil().isClickEnabled()) {
+      activity.setWallpaper(false, false);
+      dismiss();
+    } else if (id == R.id.button_overwrite_replace && getViewUtil().isClickEnabled()) {
+      activity.setWallpaper(true, false);
+      dismiss();
+    } else if (id == R.id.button_overwrite_replace_all && getViewUtil().isClickEnabled()) {
+      activity.setWallpaper(true, true);
+      dismiss();
+    }
+    performHapticClick();
+  }
+
   private void loadCurrent() {
     binding.cardOverwriteCurrent.setLayoutParams(
         new LinearLayout.LayoutParams(previewWidth, previewHeight)
     );
-    String suffix = activity.getDarkSuffix();
+    String suffix = Constants.getDarkSuffix(isDarkMode);
     String base64 = getSharedPrefs().getString(PREF.WALLPAPER + suffix, DEF.WALLPAPER);
     if (base64 != null) {
       BitmapDrawable drawable = BitmapUtil.getBitmapDrawable(activity, base64);
@@ -150,7 +166,7 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     }
     WallpaperManager manager = WallpaperManager.getInstance(activity);
     Drawable drawable = manager.getDrawable();
-    if (drawable != null) {
+    if (drawable != null && activity.isCurrentStaticWallpaper()) {
       binding.cardOverwriteNew.setLayoutParams(
           new LinearLayout.LayoutParams(previewWidth, previewHeight)
       );

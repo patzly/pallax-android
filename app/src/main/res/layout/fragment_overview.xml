@@ -121,7 +121,7 @@
 
         <com.google.android.material.card.MaterialCardView
           style="@style/Widget.Pallax.Card.Text"
-          app:contentPaddingBottom="0dp"
+          app:contentPaddingBottom="8dp"
           app:contentPaddingLeft="0dp"
           app:contentPaddingRight="0dp">
 

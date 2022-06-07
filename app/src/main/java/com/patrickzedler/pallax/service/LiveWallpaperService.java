@@ -382,7 +382,7 @@ public class LiveWallpaperService extends WallpaperService {
 
     @Override
     public WallpaperColors onComputeColors() {
-      if (VERSION.SDK_INT >= VERSION_CODES.O_MR1) {
+      if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && wallpaperDrawable != null) {
         return wallpaperDrawable.getWallpaperColors(darkText, lightText, darkLauncher);
       } else {
         return super.onComputeColors();
@@ -549,9 +549,13 @@ public class LiveWallpaperService extends WallpaperService {
     }
 
     private void loadWallpaper() {
-      String suffix = isDark ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
-
+      String suffix = Constants.getDarkSuffix(isDark);
       String base64 = sharedPrefs.getString(PREF.WALLPAPER + suffix, DEF.WALLPAPER);
+      if (base64 == null) {
+        // Try to load other mode but this should not happen because both modes are filled
+        String otherSuffix = Constants.getDarkSuffix(!isDark);
+        base64 = sharedPrefs.getString(PREF.WALLPAPER + otherSuffix, DEF.WALLPAPER);
+      }
       if (base64 != null) {
         BitmapDrawable drawable = BitmapUtil.getBitmapDrawable(context, base64);
         wallpaperDrawable = new WallpaperDrawable(context, drawable);
