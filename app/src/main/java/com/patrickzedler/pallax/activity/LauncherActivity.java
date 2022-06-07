@@ -38,6 +38,7 @@ import androidx.core.content.res.ResourcesCompat;
 import com.google.android.material.color.DynamicColors;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.EXTRA;
+import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.THEME;
 import com.patrickzedler.pallax.R;
@@ -75,17 +76,19 @@ public class LauncherActivity extends MainActivity {
 
       // DARK MODE
 
-      int modeDark = sharedPrefs.getInt(PREF.MODE, DEF.MODE);
+      int mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
       int uiMode = getResources().getConfiguration().uiMode;
-      switch (modeDark) {
-        case AppCompatDelegate.MODE_NIGHT_NO:
+      switch (sharedPrefs.getInt(PREF.MODE, DEF.MODE)) {
+        case MODE.LIGHT:
+          mode = AppCompatDelegate.MODE_NIGHT_NO;
           uiMode = Configuration.UI_MODE_NIGHT_NO;
           break;
-        case AppCompatDelegate.MODE_NIGHT_YES:
+        case MODE.DARK:
+          mode = AppCompatDelegate.MODE_NIGHT_YES;
           uiMode = Configuration.UI_MODE_NIGHT_YES;
           break;
       }
-      AppCompatDelegate.setDefaultNightMode(modeDark);
+      AppCompatDelegate.setDefaultNightMode(mode);
       // Apply config to resources
       Resources resBase = getBaseContext().getResources();
       Configuration configBase = resBase.getConfiguration();

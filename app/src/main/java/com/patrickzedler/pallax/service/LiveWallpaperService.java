@@ -53,8 +53,8 @@ import android.view.WindowManager;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.Constants.ACTION;
-import com.patrickzedler.pallax.Constants.DARK_MODE;
 import com.patrickzedler.pallax.Constants.DEF;
+import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.REQUEST_SOURCE;
 import com.patrickzedler.pallax.Constants.USER_PRESENCE;
@@ -190,11 +190,11 @@ public class LiveWallpaperService extends WallpaperService {
   }
 
   private boolean isDarkMode() {
-    if (darkMode == DARK_MODE.ON) {
+    if (darkMode == MODE.DARK) {
       return true;
     }
     int flags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-    return darkMode == DARK_MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
+    return darkMode == MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
   }
 
   private boolean isKeyguardLocked() {
@@ -507,7 +507,7 @@ public class LiveWallpaperService extends WallpaperService {
     }
 
     private void loadDarkModeDependencies() {
-      darkMode = sharedPrefs.getInt(PREF.DARK_MODE, DEF.DARK_MODE);
+      darkMode = sharedPrefs.getInt(PREF.WALLPAPER_MODE, DEF.WALLPAPER_MODE);
       isDark = isDarkMode();
       String suffix = isDark ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
 

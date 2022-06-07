@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -52,6 +53,7 @@ public class WallpaperDrawable {
   private float offsetY;
   private float scale;
   private float zoom;
+  private int dimmingColor;
   private final float pixelUnit;
   private final Rect rect;
   private Point point;
@@ -60,8 +62,9 @@ public class WallpaperDrawable {
     this.drawable = drawable;
 
     pixelUnit = getPixelUnit(context);
-
     scale = 1;
+
+    dimmingColor = Color.BLACK;
 
     rect = new Rect();
     point = new Point();
@@ -147,12 +150,13 @@ public class WallpaperDrawable {
   }
 
   /**
-   * dimming 0-1 (0 = no dimming, 1 = black)
+   * dimming -1 to 1 (-1 = black, 0 = none, 1 = white)
    */
   public void setDimming(float dimming) {
     if (drawable != null) {
-      drawable.setAlpha((int) ((1 - dimming) * 255));
+      drawable.setAlpha((int) ((1 - Math.abs(dimming)) * 255));
     }
+    dimmingColor = dimming > 0 ? Color.WHITE : Color.BLACK;
   }
 
   public static float getDefaultScale(Context context, boolean isDarkMode) {
@@ -205,7 +209,7 @@ public class WallpaperDrawable {
     if (drawable == null) {
       return;
     }
-    // canvas.drawColor(Color.BLACK);
+    canvas.drawColor(dimmingColor);
 
     float scale = this.scale - zoom;
     point = getFinalCenter(canvas);

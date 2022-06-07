@@ -121,8 +121,8 @@
 
         <com.google.android.material.card.MaterialCardView
           style="@style/Widget.Pallax.Card.Text"
-          android:layout_marginBottom="16dp"
-          app:contentPaddingBottom="8dp"
+          android:layout_marginBottom="0dp"
+          app:contentPaddingBottom="0dp"
           app:contentPaddingLeft="0dp"
           app:contentPaddingRight="0dp">
 
@@ -168,6 +168,7 @@
         <com.google.android.material.card.MaterialCardView
           android:id="@+id/card_overview_gpu"
           style="@style/Widget.Pallax.Card.Text"
+          android:layout_marginTop="16dp"
           app:cardBackgroundColor="?attr/colorErrorContainer">
 
           <TextView

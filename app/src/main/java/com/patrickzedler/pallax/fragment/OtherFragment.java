@@ -33,7 +33,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.color.DynamicColors;
@@ -42,6 +41,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.snackbar.Snackbar.Callback;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.EXTRA;
+import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.THEME;
 import com.patrickzedler.pallax.R;
@@ -127,10 +127,10 @@ public class OtherFragment extends BaseFragment
 
     int id;
     switch (getSharedPrefs().getInt(PREF.MODE, DEF.MODE)) {
-      case AppCompatDelegate.MODE_NIGHT_NO:
+      case MODE.LIGHT:
         id = R.id.button_other_theme_light;
         break;
-      case AppCompatDelegate.MODE_NIGHT_YES:
+      case MODE.DARK:
         id = R.id.button_other_theme_dark;
         break;
       default:
@@ -144,11 +144,11 @@ public class OtherFragment extends BaseFragment
       }
       int pref;
       if (checkedId == R.id.button_other_theme_light) {
-        pref = AppCompatDelegate.MODE_NIGHT_NO;
+        pref = MODE.LIGHT;
       } else if (checkedId == R.id.button_other_theme_dark) {
-        pref = AppCompatDelegate.MODE_NIGHT_YES;
+        pref = MODE.DARK;
       } else {
-        pref = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        pref = MODE.AUTO;
       }
       getSharedPrefs().edit().putInt(PREF.MODE, pref).apply();
       performHapticClick();
@@ -170,7 +170,6 @@ public class OtherFragment extends BaseFragment
     );
   }
 
-  @SuppressLint("ShowToast")
   @Override
   public void onClick(View v) {
     int id = v.getId();

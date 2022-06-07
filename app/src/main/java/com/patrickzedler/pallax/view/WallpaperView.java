@@ -21,7 +21,6 @@ package com.patrickzedler.pallax.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.NonNull;
@@ -42,7 +41,6 @@ public class WallpaperView extends View {
 
   @Override
   protected void onDraw(Canvas canvas) {
-    canvas.drawColor(Color.BLACK);
     if (drawable != null) {
       drawable.draw(canvas);
     }

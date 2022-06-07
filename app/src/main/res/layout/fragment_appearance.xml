@@ -87,9 +87,73 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon"
+          android:paddingTop="8dp"
+          android:paddingBottom="0dp"
+          android:paddingStart="16dp"
+          android:paddingEnd="0dp">
+
+          <ImageView
+            android:id="@+id/image_appearance_mode"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:layout_marginEnd="32dp"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:text="@string/appearance_mode"
+              android:paddingStart="0dp"
+              android:paddingEnd="16dp"/>
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/appearance_mode_description"
+              android:paddingStart="0dp"
+              android:paddingEnd="16dp"/>
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+              android:id="@+id/toggle_appearance_mode"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:layout_marginBottom="16dp"
+              android:layout_marginEnd="16dp"
+              app:singleSelection="true"
+              app:selectionRequired="true">
+
+              <Button
+                android:id="@+id/button_appearance_mode_auto"
+                style="@style/Widget.Pallax.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_theme_auto" />
+
+              <Button
+                android:id="@+id/button_appearance_mode_dark"
+                style="@style/Widget.Pallax.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_theme_dark" />
+
+              <Button
+                android:id="@+id/button_appearance_mode_light"
+                style="@style/Widget.Pallax.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/other_theme_light" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
           style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine"
           android:paddingTop="0dp"
-          android:paddingBottom="8dp"
+          android:paddingBottom="12dp"
           android:paddingStart="16dp"
           android:paddingEnd="0dp"
           android:minHeight="0dp">
@@ -184,70 +248,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon"
-          android:paddingTop="12dp"
-          android:paddingBottom="0dp"
-          android:paddingStart="16dp"
-          android:paddingEnd="0dp">
-
-          <ImageView
-            android:id="@+id/image_appearance_dark_mode"
-            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
-            android:layout_marginEnd="32dp"
-            tools:ignore="ContentDescription" />
-
-          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
-
-            <TextView
-              style="@style/Widget.Pallax.TextView.ListItem.Title"
-              android:text="@string/appearance_dark_mode"
-              android:paddingStart="0dp"
-              android:paddingEnd="16dp"/>
-
-            <TextView
-              style="@style/Widget.Pallax.TextView.ListItem.Description"
-              android:text="@string/appearance_dark_mode_description"
-              android:paddingStart="0dp"
-              android:paddingEnd="16dp"/>
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-              android:id="@+id/toggle_appearance_dark_mode"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="8dp"
-              android:layout_marginBottom="8dp"
-              android:layout_marginEnd="16dp"
-              app:singleSelection="true"
-              app:selectionRequired="true">
-
-              <Button
-                android:id="@+id/button_appearance_dark_mode_auto"
-                style="@style/Widget.Pallax.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/appearance_dark_mode_auto" />
-
-              <Button
-                android:id="@+id/button_appearance_dark_mode_on"
-                style="@style/Widget.Pallax.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/appearance_dark_mode_on" />
-
-              <Button
-                android:id="@+id/button_appearance_dark_mode_off"
-                style="@style/Widget.Pallax.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/appearance_dark_mode_off" />
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-          </LinearLayout>
-
-        </LinearLayout>
-
         <TextView
           style="@style/Widget.Pallax.TextView.Category"
           android:text="@string/appearance_position_category" />
@@ -267,10 +267,7 @@
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Title"
               android:layout_width="wrap_content"
-              android:text="@string/appearance_scale"
-              android:drawablePadding="8dp"
-              app:drawableEndCompat="@drawable/ic_round_link_off"
-              app:drawableTint="?attr/colorTertiary" />
+              android:text="@string/appearance_scale" />
 
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Description"
@@ -319,10 +316,7 @@
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Title"
               android:layout_width="wrap_content"
-              android:text="@string/appearance_static_offset"
-              android:drawablePadding="8dp"
-              app:drawableEndCompat="@drawable/ic_round_link_off"
-              app:drawableTint="?attr/colorTertiary" />
+              android:text="@string/appearance_static_offset" />
 
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Description"
@@ -358,10 +352,7 @@
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Title"
               android:layout_width="wrap_content"
-              android:text="@string/appearance_dimming"
-              android:drawablePadding="8dp"
-              app:drawableEndCompat="@drawable/ic_round_link_off"
-              app:drawableTint="?attr/colorTertiary" />
+              android:text="@string/appearance_dimming" />
 
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Description"
@@ -374,8 +365,8 @@
         <com.google.android.material.slider.Slider
           android:id="@+id/slider_appearance_dimming"
           style="@style/Widget.Pallax.Slider"
-          android:valueFrom="0"
-          android:valueTo="5"
+          android:valueFrom="-6"
+          android:valueTo="6"
           android:stepSize="1" />
 
         <LinearLayout
@@ -393,10 +384,7 @@
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Title"
               android:layout_width="wrap_content"
-              android:text="@string/appearance_dark_text"
-              android:drawablePadding="8dp"
-              app:drawableEndCompat="@drawable/ic_round_link_off"
-              app:drawableTint="?attr/colorTertiary" />
+              android:text="@string/appearance_dark_text" />
 
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Description"
@@ -425,10 +413,7 @@
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Title"
               android:layout_width="wrap_content"
-              android:text="@string/appearance_white_text"
-              android:drawablePadding="8dp"
-              app:drawableEndCompat="@drawable/ic_round_link_off"
-              app:drawableTint="?attr/colorTertiary" />
+              android:text="@string/appearance_white_text" />
 
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Description"
@@ -457,10 +442,7 @@
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Title"
               android:layout_width="wrap_content"
-              android:text="@string/appearance_dark_launcher"
-              android:drawablePadding="8dp"
-              app:drawableEndCompat="@drawable/ic_round_link_off"
-              app:drawableTint="?attr/colorTertiary" />
+              android:text="@string/appearance_dark_launcher" />
 
             <TextView
               style="@style/Widget.Pallax.TextView.ListItem.Description"

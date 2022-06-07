@@ -20,7 +20,6 @@
 package com.patrickzedler.pallax;
 
 import android.graphics.Color;
-import androidx.appcompat.app.AppCompatDelegate;
 
 public final class Constants {
 
@@ -34,7 +33,7 @@ public final class Constants {
     // Appearance
 
     public static final String WALLPAPER = "wallpaper";
-    public static final String DARK_MODE = "dark_mode";
+    public static final String WALLPAPER_MODE = "wallpaper_mode";
 
     public static final String SCALE = "scale";
     public static final String STATIC_OFFSET = "static_offset";
@@ -84,7 +83,7 @@ public final class Constants {
   public static final class DEF {
 
     public static final String WALLPAPER = null;
-    public static final int DARK_MODE = Constants.DARK_MODE.AUTO;
+    public static final int WALLPAPER_MODE = Constants.MODE.AUTO;
     public static final float SCALE = 1;
     public static final int STATIC_OFFSET = 0;
     public static final int COLOR = Color.BLACK;
@@ -112,14 +111,14 @@ public final class Constants {
 
     public static final String LANGUAGE = null;
     public static final String THEME = "";
-    public static final int MODE = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+    public static final int MODE = Constants.MODE.AUTO;
   }
 
-  public static final class DARK_MODE {
+  public static final class MODE {
 
     public static final int AUTO = -1;
-    public static final int ON = 1;
-    public static final int OFF = 0;
+    public static final int LIGHT = 1;
+    public static final int DARK = 0;
   }
 
   public static final class USER_PRESENCE {

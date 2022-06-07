@@ -67,9 +67,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.patrickzedler.pallax.BuildConfig;
 import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.Constants.ACTION;
-import com.patrickzedler.pallax.Constants.DARK_MODE;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.EXTRA;
+import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.THEME;
 import com.patrickzedler.pallax.NavMainDirections;
@@ -128,17 +128,19 @@ public class MainActivity extends AppCompatActivity {
 
     // DARK MODE
 
-    int modeDark = sharedPrefs.getInt(PREF.MODE, DEF.MODE);
+    int mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
     int uiMode = getResources().getConfiguration().uiMode;
-    switch (modeDark) {
-      case AppCompatDelegate.MODE_NIGHT_NO:
+    switch (sharedPrefs.getInt(PREF.MODE, DEF.MODE)) {
+      case MODE.LIGHT:
+        mode = AppCompatDelegate.MODE_NIGHT_NO;
         uiMode = Configuration.UI_MODE_NIGHT_NO;
         break;
-      case AppCompatDelegate.MODE_NIGHT_YES:
+      case MODE.DARK:
+        mode = AppCompatDelegate.MODE_NIGHT_YES;
         uiMode = Configuration.UI_MODE_NIGHT_YES;
         break;
     }
-    AppCompatDelegate.setDefaultNightMode(modeDark);
+    AppCompatDelegate.setDefaultNightMode(mode);
 
     // APPLY CONFIG TO RESOURCES
 
@@ -517,12 +519,12 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public boolean isWallpaperDarkMode() {
-    int darkMode = getSharedPrefs().getInt(PREF.DARK_MODE, DEF.DARK_MODE);
-    if (darkMode == DARK_MODE.ON) {
+    int mode = getSharedPrefs().getInt(PREF.WALLPAPER_MODE, DEF.WALLPAPER_MODE);
+    if (mode == MODE.DARK) {
       return true;
     }
     int flags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-    return darkMode == DARK_MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
+    return mode == MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
   }
 
   public String getDarkSuffix() {

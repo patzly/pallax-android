@@ -39,8 +39,8 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.slider.Slider.OnChangeListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.patrickzedler.pallax.Constants;
-import com.patrickzedler.pallax.Constants.DARK_MODE;
 import com.patrickzedler.pallax.Constants.DEF;
+import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.R;
 import com.patrickzedler.pallax.activity.MainActivity;
@@ -122,32 +122,32 @@ public class AppearanceFragment extends BaseFragment
 
     // DARK MODE
 
-    int idDarkMode;
-    switch (getSharedPrefs().getInt(PREF.DARK_MODE, DEF.DARK_MODE)) {
-      case DARK_MODE.ON:
-        idDarkMode = R.id.button_appearance_dark_mode_on;
+    int idMode;
+    switch (getSharedPrefs().getInt(PREF.WALLPAPER_MODE, DEF.WALLPAPER_MODE)) {
+      case MODE.DARK:
+        idMode = R.id.button_appearance_mode_dark;
         break;
-      case DARK_MODE.OFF:
-        idDarkMode = R.id.button_appearance_dark_mode_off;
+      case MODE.LIGHT:
+        idMode = R.id.button_appearance_mode_light;
         break;
       default:
-        idDarkMode = R.id.button_appearance_dark_mode_auto;
+        idMode = R.id.button_appearance_mode_auto;
         break;
     }
-    binding.toggleAppearanceDarkMode.check(idDarkMode);
-    binding.toggleAppearanceDarkMode.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+    binding.toggleAppearanceMode.check(idMode);
+    binding.toggleAppearanceMode.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
       if (!isChecked) {
         return;
       }
       int pref;
-      if (checkedId == R.id.button_appearance_dark_mode_on) {
-        pref = DARK_MODE.ON;
-      } else if (checkedId == R.id.button_appearance_dark_mode_off) {
-        pref = DARK_MODE.OFF;
+      if (checkedId == R.id.button_appearance_mode_dark) {
+        pref = MODE.DARK;
+      } else if (checkedId == R.id.button_appearance_mode_light) {
+        pref = MODE.LIGHT;
       } else {
-        pref = DARK_MODE.AUTO;
+        pref = MODE.AUTO;
       }
-      getSharedPrefs().edit().putInt(PREF.DARK_MODE, pref).apply();
+      getSharedPrefs().edit().putInt(PREF.WALLPAPER_MODE, pref).apply();
       activity.requestThemeRefresh();
       performHapticClick();
 
@@ -156,9 +156,9 @@ public class AppearanceFragment extends BaseFragment
       boolean isNewWallpaperDarkMode = activity.isWallpaperDarkMode();
       if (isWallpaperDarkMode != isNewWallpaperDarkMode) {
         showMonetInfoIfRequired();
-        ViewUtil.startIcon(binding.imageAppearanceDarkMode);
+        ViewUtil.startIcon(binding.imageAppearanceMode);
         new Handler(Looper.getMainLooper()).postDelayed(
-            () -> binding.imageAppearanceDarkMode.setImageResource(
+            () -> binding.imageAppearanceMode.setImageResource(
                 isNewWallpaperDarkMode
                     ? R.drawable.ic_round_dark_mode_to_light_mode_anim
                     : R.drawable.ic_round_light_mode_to_dark_mode_anim
@@ -170,7 +170,7 @@ public class AppearanceFragment extends BaseFragment
       }
     });
     isWallpaperDarkMode = activity.isWallpaperDarkMode();
-    binding.imageAppearanceDarkMode.setImageResource(
+    binding.imageAppearanceMode.setImageResource(
         isWallpaperDarkMode
             ? R.drawable.ic_round_dark_mode_to_light_mode_anim
             : R.drawable.ic_round_light_mode_to_dark_mode_anim
@@ -252,12 +252,12 @@ public class AppearanceFragment extends BaseFragment
       if (binding.cardAppearanceWallpaperLight.isChecked()) {
         return;
       }
-      binding.toggleAppearanceDarkMode.check(R.id.button_appearance_dark_mode_off);
+      binding.toggleAppearanceMode.check(R.id.button_appearance_mode_light);
     } else if (id == R.id.card_appearance_wallpaper_dark) {
       if (binding.cardAppearanceWallpaperDark.isChecked()) {
         return;
       }
-      binding.toggleAppearanceDarkMode.check(R.id.button_appearance_dark_mode_on);
+      binding.toggleAppearanceMode.check(R.id.button_appearance_mode_dark);
     } else if (id == R.id.frame_appearance_scale_reset) {
       float def = WallpaperDrawable.getDefaultScale(activity, activity.isWallpaperDarkMode());
       float scaleOld = binding.sliderAppearanceScale.getValue();
@@ -378,7 +378,7 @@ public class AppearanceFragment extends BaseFragment
       screenHeight = width;
     }
     float screenRatio = (float) screenWidth / screenHeight;
-    int previewHeight = SystemUiUtil.dpToPx(activity, 140);
+    int previewHeight = SystemUiUtil.dpToPx(activity, 150);
     int previewWidth = (int) (previewHeight * screenRatio);
     scaleRatio = ((float) previewHeight) / ((float) screenHeight);
 
