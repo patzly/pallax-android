@@ -22,27 +22,20 @@ package com.patrickzedler.pallax.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.os.Build;
 import androidx.annotation.NonNull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.R;
 import com.patrickzedler.pallax.model.Language;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class LocaleUtil {
 
   public static Locale getDeviceLocale() {
-    Locale device;
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-      device = Resources.getSystem().getConfiguration().getLocales().get(0);
-    } else {
-      device = Resources.getSystem().getConfiguration().locale;
-    }
-    return device;
+    return Resources.getSystem().getConfiguration().getLocales().get(0);
   }
 
   public static Locale getUserLocale(Context context, SharedPreferences sharedPrefs) {
@@ -67,10 +60,7 @@ public class LocaleUtil {
     for (String locale : locales) {
       languages.add(new Language(locale));
     }
-    Collections.sort(
-        languages,
-        (item1, item2) -> item1.getName().toLowerCase().compareTo(item2.getName().toLowerCase())
-    );
+    languages.sort(Comparator.comparing(item -> item.getName().toLowerCase()));
     return languages;
   }
 

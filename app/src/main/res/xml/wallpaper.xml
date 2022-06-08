@@ -21,10 +21,8 @@
 
 <wallpaper
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
   android:showMetadataInPreview="true"
   android:thumbnail="@raw/thumbnail"
   android:author="@string/app_developer"
   android:description="@string/wallpaper_description_picker"
-  android:settingsActivity="com.patrickzedler.pallax.activity.SettingsActivity"
-  tools:targetApi="n_mr1" />
+  android:settingsActivity="com.patrickzedler.pallax.activity.SettingsActivity" />

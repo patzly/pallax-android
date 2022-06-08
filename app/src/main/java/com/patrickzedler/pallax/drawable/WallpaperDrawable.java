@@ -180,18 +180,15 @@ public class WallpaperDrawable {
         float wallpaperRatio = wallpaperWidth / wallpaperHeight;
         int zoom = sharedPrefs.getInt(PREF.ZOOM_INTENSITY, DEF.ZOOM_INTENSITY);
 
-        float outputWidth, outputHeight;
+        float outputHeight;
 
         if (screenRatio > wallpaperRatio) {
           //fit in width (width scale is 1.0)
-          outputWidth = screenWidth;
           outputHeight = screenWidth * (wallpaperHeight / wallpaperWidth);
         } else if (screenRatio < wallpaperRatio) {
           //fit in height (height scale is 1.0)
-          outputWidth = screenHeight * (wallpaperWidth / wallpaperHeight);
           outputHeight = screenHeight;
         } else {
-          outputWidth = screenWidth;
           outputHeight = screenHeight;
         }
 

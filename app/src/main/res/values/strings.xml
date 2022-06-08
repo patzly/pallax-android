@@ -64,8 +64,6 @@
   <string name="action_hide">Hide</string>
   <string name="action_reset">Reset</string>
   <string name="action_retry">Retry</string>
-  <string name="action_deactivate">Deactivate</string>
-  <string name="action_select_all">Select all</string>
   <string name="action_continue">Continue</string>
   <string name="action_open_app_info">Open app info</string>
   <string name="action_set">Parallaxify</string>
@@ -102,8 +100,6 @@
   <string name="appearance_white_text">Force white text</string>
   <string name="appearance_dark_launcher">Dark launcher elements</string>
   <string name="appearance_dark_launcher_description">May not supported by every device</string>
-  <string name="appearance_colors_info">On devices without dynamic color support (Android 11 or lower), only the primary color is used to calculate the launcher text contrast and tinting the recent apps screen\'s background.</string>
-  <string name="appearance_colors_info_dynamic">On devices with Android 12 or higher and dynamic color support, the three selected colors are used to automatically create a system-wide color theme.</string>
 
   <!-- PARALLAX -->
 
@@ -190,7 +186,6 @@
   <string name="msg_force_stop">Forced stop required to apply changes</string>
   <string name="msg_apply_colors">Changed colors will be applied to the system the next time you turn off the screen</string>
   <string name="msg_apply_changes">To apply (eventually) changed options a restart of the running wallpaper service is recommended. This cannot be done automatically.\nPlease force-stop Pallax in your system settings and then apply Pallax as your wallpaper again.</string>
-  <string name="msg_set_wallpaper">If you encounter an issue that breaks wallpaper animation when closing this app, please choose your system\'s wallpaper picker to select Pallax.\nOtherwise you can set it directly.</string>
   <string name="msg_preview_missing">An error occurred, please select Pallax Live Wallpaper manually</string>
   <string name="msg_permission_request">Pallax needs media read permission for accessing the current wallpaper. Please tap the button below to grant it.</string>
   <string name="msg_permission_granted">Permission granted successfully!</string>
