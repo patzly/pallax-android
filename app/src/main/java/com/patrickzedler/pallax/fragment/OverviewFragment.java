@@ -75,6 +75,11 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
 
     binding.toolbarOverview.setOnMenuItemClickListener(item -> {
       int id = item.getItemId();
+      if (getViewUtil().isClickDisabled(id)) {
+        return false;
+      }
+      performHapticClick();
+
       if (id == R.id.action_feedback) {
         activity.showFeedbackBottomSheet();
       } else if (id == R.id.action_help) {
@@ -82,7 +87,6 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
       } else if (id == R.id.action_share) {
         ResUtil.share(activity, R.string.msg_share);
       }
-      performHapticClick();
       return true;
     });
     MenuItem itemHelp = binding.toolbarOverview.getMenu().findItem(R.id.action_help);
@@ -96,14 +100,14 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
     binding.frameOverviewLogo.setVisibility(shouldLogoBeVisible ? View.VISIBLE : View.GONE);
     if (activity.shouldLogoBeVisibleOnOverviewPage()) {
       binding.appBarOverview.setOnClickListener(v -> {
-        if (viewUtilLogo.isClickEnabled()) {
+        if (viewUtilLogo.isClickEnabled(v.getId())) {
           ViewUtil.startIcon(binding.imageOverviewLogo);
           performHapticClick();
         }
       });
     } else {
       binding.frameOverviewClose.setOnClickListener(v -> {
-        if (getViewUtil().isClickEnabled()) {
+        if (getViewUtil().isClickEnabled(v.getId())) {
           performHapticClick();
           activity.finish();
         }
@@ -125,27 +129,25 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
   @Override
   public void onClick(View v) {
     int id = v.getId();
-    if (id == R.id.button_overview_info && getViewUtil().isClickEnabled()) {
+    if (getViewUtil().isClickDisabled(id)) {
+      return;
+    }
+    performHapticClick();
+
+    if (id == R.id.button_overview_info) {
       activity.showTextBottomSheet(R.raw.howto, R.string.action_howto);
-      performHapticClick();
-    } else if (id == R.id.button_overview_help && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.button_overview_help) {
       activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      performHapticClick();
-    } else if (id == R.id.linear_overview_appearance && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.linear_overview_appearance) {
       navigate(OverviewFragmentDirections.actionOverviewToAppearance());
-      performHapticClick();
-    } else if (id == R.id.linear_overview_parallax && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.linear_overview_parallax) {
       navigate(OverviewFragmentDirections.actionOverviewToParallax());
-      performHapticClick();
-    } else if (id == R.id.linear_overview_size && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.linear_overview_size) {
       navigate(OverviewFragmentDirections.actionOverviewToZoom());
-      performHapticClick();
-    } else if (id == R.id.linear_overview_other && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.linear_overview_other) {
       navigate(OverviewFragmentDirections.actionOverviewToOther());
-      performHapticClick();
-    } else if (id == R.id.linear_overview_about && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.linear_overview_about) {
       navigate(OverviewFragmentDirections.actionOverviewToAbout());
-      performHapticClick();
     }
   }
 }

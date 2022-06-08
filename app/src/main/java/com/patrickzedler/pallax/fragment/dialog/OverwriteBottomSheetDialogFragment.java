@@ -128,17 +128,21 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
   @Override
   public void onClick(View v) {
     int id = v.getId();
-    if (id == R.id.button_overwrite_keep && getViewUtil().isClickEnabled()) {
+    if (getViewUtil().isClickDisabled(id)) {
+      return;
+    }
+    performHapticClick();
+
+    if (id == R.id.button_overwrite_keep) {
       activity.setWallpaper(false, false);
       dismiss();
-    } else if (id == R.id.button_overwrite_replace && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.button_overwrite_replace) {
       activity.setWallpaper(true, false);
       dismiss();
-    } else if (id == R.id.button_overwrite_replace_all && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.button_overwrite_replace_all) {
       activity.setWallpaper(true, true);
       dismiss();
     }
-    performHapticClick();
   }
 
   private void loadCurrent() {

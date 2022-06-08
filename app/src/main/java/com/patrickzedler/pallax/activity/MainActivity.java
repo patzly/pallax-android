@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
     );
 
     binding.fabMain.setOnClickListener(v -> {
-      if (viewUtil.isClickDisabled()) {
+      if (viewUtil.isClickDisabled(v.getId())) {
         return;
       }
       performHapticHeavyClick();

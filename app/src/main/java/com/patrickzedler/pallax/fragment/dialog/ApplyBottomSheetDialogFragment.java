@@ -43,6 +43,9 @@ public class ApplyBottomSheetDialogFragment extends BaseBottomSheetDialogFragmen
     binding = FragmentBottomsheetApplyBinding.inflate(inflater, container, false);
 
     binding.buttonApplyOpen.setOnClickListener(v -> {
+      if (getViewUtil().isClickDisabled(v.getId())) {
+        return;
+      }
       performHapticClick();
       try {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -56,7 +59,6 @@ public class ApplyBottomSheetDialogFragment extends BaseBottomSheetDialogFragmen
         startActivity(intent);
       }
     });
-
     return binding.getRoot();
   }
 

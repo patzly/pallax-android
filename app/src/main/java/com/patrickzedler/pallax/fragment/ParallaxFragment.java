@@ -53,8 +53,6 @@ public class ParallaxFragment extends BaseFragment
   public View onCreateView(
       @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
   ) {
-    // NumberFormatException and NotFoundException on Android 5?
-    // TODO: Probably fixed (AnimatedVectorDrawable path was broken broken)
     binding = FragmentParallaxBinding.inflate(inflater, container, false);
     return binding.getRoot();
   }
@@ -81,13 +79,18 @@ public class ParallaxFragment extends BaseFragment
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarParallax);
     binding.toolbarParallax.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled()) {
+      if (getViewUtil().isClickEnabled(v.getId())) {
         performHapticClick();
         navigateUp();
       }
     });
     binding.toolbarParallax.setOnMenuItemClickListener(item -> {
       int id = item.getItemId();
+      if (getViewUtil().isClickDisabled(id)) {
+        return false;
+      }
+      performHapticClick();
+
       if (id == R.id.action_feedback) {
         activity.showFeedbackBottomSheet();
       } else if (id == R.id.action_help) {
@@ -95,7 +98,6 @@ public class ParallaxFragment extends BaseFragment
       } else if (id == R.id.action_share) {
         ResUtil.share(activity, R.string.msg_share);
       }
-      performHapticClick();
       return true;
     });
 

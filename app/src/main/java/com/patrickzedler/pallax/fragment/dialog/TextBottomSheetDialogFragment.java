@@ -58,16 +58,18 @@ public class TextBottomSheetDialogFragment extends BaseBottomSheetDialogFragment
       );
       binding.toolbarText.setOnMenuItemClickListener(item -> {
         int id = item.getItemId();
-        if (id == R.id.action_open_link && getViewUtil().isClickEnabled()) {
+        if (getViewUtil().isClickDisabled(id)) {
+          return false;
+        }
+        if (id == R.id.action_open_link) {
           performHapticClick();
           ViewUtil.startIcon(item.getIcon());
           new Handler(Looper.getMainLooper()).postDelayed(
               () -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link))), 500
           );
           return true;
-        } else {
-          return false;
         }
+        return false;
       });
     } else {
       binding.toolbarText.setTitleCentered(true);

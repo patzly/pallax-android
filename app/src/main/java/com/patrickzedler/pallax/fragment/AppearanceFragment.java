@@ -97,13 +97,18 @@ public class AppearanceFragment extends BaseFragment
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarAppearance);
     binding.toolbarAppearance.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled()) {
+      if (getViewUtil().isClickEnabled(v.getId())) {
         performHapticClick();
         navigateUp();
       }
     });
     binding.toolbarAppearance.setOnMenuItemClickListener(item -> {
       int id = item.getItemId();
+      if (getViewUtil().isClickDisabled(id)) {
+        return false;
+      }
+      performHapticClick();
+
       if (id == R.id.action_feedback) {
         activity.showFeedbackBottomSheet();
       } else if (id == R.id.action_help) {
@@ -111,7 +116,6 @@ public class AppearanceFragment extends BaseFragment
       } else if (id == R.id.action_share) {
         ResUtil.share(activity, R.string.msg_share);
       }
-      performHapticClick();
       return true;
     });
 

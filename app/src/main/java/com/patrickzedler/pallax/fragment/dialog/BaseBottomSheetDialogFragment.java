@@ -190,19 +190,11 @@ public class BaseBottomSheetDialogFragment extends CustomBottomSheetDialogFragme
         );
         window.setNavigationBarDividerColor(ResUtil.getColorOutlineSecondary(activity));
       }
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 26
+    } else { // 26
       window.setStatusBarColor(Color.TRANSPARENT);
       lightNavBar = !isDarkModeActive && isOrientationPortraitOrNavAtBottom;
       if (isOrientationPortraitOrNavAtBottom) {
         window.setNavigationBarColor(colorScrim);
-      } else {
-        window.setNavigationBarColor(
-            isDarkModeActive ? SystemUiUtil.SCRIM_DARK_DIALOG : SystemUiUtil.SCRIM_LIGHT_DIALOG
-        );
-      }
-    } else  { // down to 21
-      if (isOrientationPortraitOrNavAtBottom) {
-        window.setNavigationBarColor(isDarkModeActive ? colorScrim : SystemUiUtil.SCRIM);
       } else {
         window.setNavigationBarColor(
             isDarkModeActive ? SystemUiUtil.SCRIM_DARK_DIALOG : SystemUiUtil.SCRIM_LIGHT_DIALOG

@@ -274,7 +274,7 @@ public class SystemBarBehavior {
         window.setNavigationBarDividerColor(ResUtil.getColorOutlineSecondary(activity));
         window.setNavigationBarColor(ResUtil.getColorBg(activity));
       }
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 26
+    } else { // 26
       window.setStatusBarColor(Color.TRANSPARENT);
       if (!isDarkModeActive) {
         SystemUiUtil.setLightStatusBar(window.getDecorView(), true);
@@ -286,27 +286,6 @@ public class SystemBarBehavior {
         }
       } else {
         window.setNavigationBarColor(isDarkModeActive ? Color.BLACK : SystemUiUtil.SCRIM);
-      }
-    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // 23
-      window.setStatusBarColor(Color.TRANSPARENT);
-      if (!isDarkModeActive) {
-        SystemUiUtil.setLightStatusBar(window.getDecorView(), true);
-      }
-      if (isOrientationPortrait) {
-        window.setNavigationBarColor(
-            isDarkModeActive ? (isScrollable ? colorScrim : Color.TRANSPARENT) : SystemUiUtil.SCRIM
-        );
-      } else {
-        window.setNavigationBarColor(isDarkModeActive ? colorScrim : SystemUiUtil.SCRIM);
-      }
-    } else { // 21
-      window.setStatusBarColor(isDarkModeActive ? Color.TRANSPARENT : SystemUiUtil.SCRIM);
-      if (isOrientationPortrait) {
-        window.setNavigationBarColor(
-            isDarkModeActive ? (isScrollable ? colorScrim : Color.TRANSPARENT) : SystemUiUtil.SCRIM
-        );
-      } else {
-        window.setNavigationBarColor(Color.BLACK);
       }
     }
   }

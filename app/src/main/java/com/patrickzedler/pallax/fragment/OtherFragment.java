@@ -97,13 +97,18 @@ public class OtherFragment extends BaseFragment
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarOther);
     binding.toolbarOther.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled()) {
+      if (getViewUtil().isClickEnabled(v.getId())) {
         performHapticClick();
         navigateUp();
       }
     });
     binding.toolbarOther.setOnMenuItemClickListener(item -> {
       int id = item.getItemId();
+      if (getViewUtil().isClickDisabled(id)) {
+        return false;
+      }
+      performHapticClick();
+
       if (id == R.id.action_feedback) {
         activity.showFeedbackBottomSheet();
       } else if (id == R.id.action_help) {
@@ -111,7 +116,6 @@ public class OtherFragment extends BaseFragment
       } else if (id == R.id.action_share) {
         ResUtil.share(activity, R.string.msg_share);
       }
-      performHapticClick();
       return true;
     });
 
@@ -173,14 +177,14 @@ public class OtherFragment extends BaseFragment
   @Override
   public void onClick(View v) {
     int id = v.getId();
-    if (id == R.id.linear_other_language) {
+    if (id == R.id.linear_other_language && getViewUtil().isClickEnabled(id)) {
       ViewUtil.startIcon(binding.imageOtherLanguage);
       performHapticClick();
       navigate(OtherFragmentDirections.actionOtherToLanguagesDialog());
     } else if (id == R.id.linear_other_launcher) {
       ViewUtil.startIcon(binding.imageOtherLauncher);
       binding.switchOtherLauncher.setChecked(!binding.switchOtherLauncher.isChecked());
-    } else if (id == R.id.linear_other_reset && getViewUtil().isClickEnabled()) {
+    } else if (id == R.id.linear_other_reset && getViewUtil().isClickEnabled(id)) {
       ViewUtil.startIcon(binding.imageOtherReset);
       performHapticClick();
       activity.showSnackbar(

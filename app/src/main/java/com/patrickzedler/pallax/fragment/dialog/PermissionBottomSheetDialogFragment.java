@@ -22,13 +22,17 @@ package com.patrickzedler.pallax.fragment.dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout.LayoutParams;
 import androidx.annotation.NonNull;
+import com.patrickzedler.pallax.R;
 import com.patrickzedler.pallax.activity.MainActivity;
 import com.patrickzedler.pallax.databinding.FragmentBottomsheetPermissionBinding;
+import com.patrickzedler.pallax.util.ViewUtil;
 
-public class PermissionBottomSheetDialogFragment extends BaseBottomSheetDialogFragment {
+public class PermissionBottomSheetDialogFragment extends BaseBottomSheetDialogFragment
+    implements OnClickListener {
 
   private static final String TAG = "PermissionBottomSheet";
 
@@ -38,16 +42,11 @@ public class PermissionBottomSheetDialogFragment extends BaseBottomSheetDialogFr
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle state) {
     binding = FragmentBottomsheetPermissionBinding.inflate(inflater, container, false);
 
-    binding.buttonPermissionCancel.setOnClickListener(v -> {
-      performHapticClick();
-      dismiss();
-    });
-
-    binding.buttonPermissionGrant.setOnClickListener(v -> {
-      performHapticClick();
-      ((MainActivity) requireActivity()).requestPermission();
-      dismiss();
-    });
+    ViewUtil.setOnClickListeners(
+        this,
+        binding.buttonPermissionGrant,
+        binding.buttonPermissionCancel
+    );
 
     return binding.getRoot();
   }
@@ -56,6 +55,22 @@ public class PermissionBottomSheetDialogFragment extends BaseBottomSheetDialogFr
   public void onDestroy() {
     super.onDestroy();
     binding = null;
+  }
+
+  @Override
+  public void onClick(View v) {
+    int id = v.getId();
+    if (getViewUtil().isClickDisabled(id)) {
+      return;
+    }
+    performHapticClick();
+
+    if (id == R.id.button_permission_grant) {
+      ((MainActivity) requireActivity()).requestPermission();
+      dismiss();
+    } else if (id == R.id.button_permission_cancel) {
+      dismiss();
+    }
   }
 
   @Override
