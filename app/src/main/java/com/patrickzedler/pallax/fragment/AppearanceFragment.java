@@ -209,7 +209,7 @@ public class AppearanceFragment extends BaseFragment
       if (value == 0) {
         return getString(R.string.parallax_none);
       } else {
-        return String.valueOf((int) value);
+        return getString(R.string.label_percent, String.valueOf((int) value * 10));
       }
     });
 

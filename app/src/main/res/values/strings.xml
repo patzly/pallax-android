@@ -45,6 +45,7 @@
   <!-- LABELS -->
 
   <string name="label_ms">%1$sms</string>
+  <string name="label_percent">%1$s%%</string>
   <!--This string will be inserted in the question if the stored wallpaper of light/dark mode should be replaced.-->
   <string name="label_light">light</string>
   <!--This string will be inserted in the question if the stored wallpaper of light/dark mode should be replaced.-->
