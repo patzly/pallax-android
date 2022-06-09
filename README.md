@@ -1,9 +1,8 @@
-# Pallax Android
-### Turn every photo into a satisfying live wallpaper
+# Pallax Android – Photo Live Wallpaper
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)  [![Release](https://img.shields.io/github/v/release/patzly/pallax-android?label=Release&logo=github)](https://github.com/patzly/pallax-android/releases)  [![APK Downloads](https://img.shields.io/github/downloads/patzly/pallax-android/total.svg?label=APK%20Downloads&logo=github)](https://github.com/patzly/pallax-android/releases)
 
-Pallax Android is an open-source Android app that lets you convert your current static home screen background into a stunning live wallpaper experience with auto dark mode and power-efficient parallax and zoom animations.
+Pallax Android is an Android app that lets you convert your current static home screen background into a stunning live wallpaper experience with auto dark mode and power-efficient parallax and zoom animations, all customizable to your preferences.
 
 ## Download
 
