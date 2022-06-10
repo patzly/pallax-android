@@ -52,7 +52,6 @@ public final class Constants {
     public static final String DIMMING = "dimming";
     public static final String USE_DARK_TEXT = "dark_text";
     public static final String FORCE_LIGHT_TEXT = "light_text";
-    public static final String USE_DARK_LAUNCHER = "dark_launcher";
 
     // Parallax
 
@@ -98,7 +97,6 @@ public final class Constants {
     public static final int DIMMING_DARK = -2;
     public static final boolean USE_DARK_TEXT = false;
     public static final boolean FORCE_LIGHT_TEXT = false;
-    public static final boolean USE_DARK_LAUNCHER = false;
 
     public static final int PARALLAX = 2;
     public static final boolean POWER_SAVE_SWIPE = false;

@@ -225,7 +225,6 @@ public class LiveWallpaperService extends WallpaperService {
     private Context context;
     private boolean isDarkMode, followSystem, isDark;
     private boolean darkText, lightText;
-    private boolean darkLauncher;
     private int dimming;
     private int zoomIntensity;
     private boolean isZoomLauncherEnabled, isZoomUnlockEnabled;
@@ -373,7 +372,7 @@ public class LiveWallpaperService extends WallpaperService {
     @Override
     public WallpaperColors onComputeColors() {
       if (VERSION.SDK_INT >= VERSION_CODES.O_MR1 && wallpaperDrawable != null) {
-        return wallpaperDrawable.getWallpaperColors(darkText, lightText, darkLauncher);
+        return wallpaperDrawable.getWallpaperColors(darkText, lightText);
       } else {
         return super.onComputeColors();
       }
@@ -510,9 +509,6 @@ public class LiveWallpaperService extends WallpaperService {
       );
       darkText = sharedPrefs.getBoolean(PREF.USE_DARK_TEXT + suffix, DEF.USE_DARK_TEXT);
       lightText = sharedPrefs.getBoolean(PREF.FORCE_LIGHT_TEXT + suffix, DEF.FORCE_LIGHT_TEXT);
-      darkLauncher = sharedPrefs.getBoolean(
-          PREF.USE_DARK_LAUNCHER + suffix, DEF.USE_DARK_LAUNCHER
-      );
 
       scale = sharedPrefs.getFloat(
           PREF.SCALE + suffix, WallpaperDrawable.getDefaultScale(context, isDarkMode())

@@ -398,35 +398,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-          android:id="@+id/linear_appearance_dark_launcher"
-          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Clickable">
-
-          <ImageView
-            android:id="@+id/image_appearance_dark_launcher"
-            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
-            android:src="@drawable/ic_round_filter_b_and_w"
-            tools:ignore="ContentDescription" />
-
-          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
-
-            <TextView
-              style="@style/Widget.Pallax.TextView.ListItem.Title"
-              android:layout_width="wrap_content"
-              android:text="@string/appearance_dark_launcher" />
-
-            <TextView
-              style="@style/Widget.Pallax.TextView.ListItem.Description"
-              android:text="@string/appearance_dark_launcher_description" />
-
-          </LinearLayout>
-
-          <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/switch_appearance_dark_launcher"
-            style="@style/Widget.Pallax.Switch" />
-
-        </LinearLayout>
-
       </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,8 +99,6 @@
   <string name="appearance_dark_text">Dark text</string>
   <string name="appearance_dark_text_description">May affect readability</string>
   <string name="appearance_white_text">Force white text</string>
-  <string name="appearance_dark_launcher">Dark launcher elements</string>
-  <string name="appearance_dark_launcher_description">May not supported by every device</string>
 
   <!-- PARALLAX -->
 

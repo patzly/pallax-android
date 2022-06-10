@@ -163,11 +163,9 @@ public class AppearanceFragment extends BaseFragment
     if (VERSION.SDK_INT >= 31) {
       binding.linearAppearanceDarkText.setVisibility(View.VISIBLE);
       binding.linearAppearanceLightText.setVisibility(View.GONE);
-      binding.linearAppearanceDarkLauncher.setVisibility(View.GONE);
     } else {
       binding.linearAppearanceDarkText.setVisibility(View.GONE);
       binding.linearAppearanceLightText.setVisibility(View.VISIBLE);
-      binding.linearAppearanceDarkLauncher.setVisibility(View.VISIBLE);
     }
 
     // Wallpaper previews
@@ -183,16 +181,14 @@ public class AppearanceFragment extends BaseFragment
         binding.linearAppearanceFollowSystem,
         binding.frameAppearanceScaleReset,
         binding.linearAppearanceDarkText,
-        binding.linearAppearanceLightText,
-        binding.linearAppearanceDarkLauncher
+        binding.linearAppearanceLightText
     );
 
     ViewUtil.setOnCheckedChangeListeners(
         this,
         binding.switchAppearanceFollowSystem,
         binding.switchAppearanceDarkText,
-        binding.switchAppearanceLightText,
-        binding.switchAppearanceDarkLauncher
+        binding.switchAppearanceLightText
     );
   }
 
@@ -243,10 +239,6 @@ public class AppearanceFragment extends BaseFragment
       binding.switchAppearanceLightText.setChecked(
           !binding.switchAppearanceLightText.isChecked()
       );
-    } else if (id == R.id.linear_appearance_dark_launcher) {
-      binding.switchAppearanceDarkLauncher.setChecked(
-          !binding.switchAppearanceDarkLauncher.isChecked()
-      );
     }
   }
 
@@ -271,11 +263,6 @@ public class AppearanceFragment extends BaseFragment
       activity.requestThemeRefresh();
       performHapticClick();
       ViewUtil.startIcon(binding.imageAppearanceLightText);
-    } else if (id == R.id.switch_appearance_dark_launcher) {
-      getSharedPrefs().edit().putBoolean(PREF.USE_DARK_LAUNCHER + suffix, isChecked).apply();
-      activity.requestThemeRefresh();
-      performHapticClick();
-      ViewUtil.startIcon(binding.imageAppearanceDarkLauncher);
     }
   }
 
@@ -362,9 +349,6 @@ public class AppearanceFragment extends BaseFragment
     );
     binding.switchAppearanceLightText.setChecked(
         getSharedPrefs().getBoolean(PREF.FORCE_LIGHT_TEXT + suffix, DEF.FORCE_LIGHT_TEXT)
-    );
-    binding.switchAppearanceDarkLauncher.setChecked(
-        getSharedPrefs().getBoolean(PREF.USE_DARK_LAUNCHER + suffix, DEF.USE_DARK_LAUNCHER)
     );
     areListenersActive = true;
   }

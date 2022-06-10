@@ -75,16 +75,13 @@ public class WallpaperDrawable {
   }
 
   @RequiresApi(api = VERSION_CODES.O_MR1)
-  public WallpaperColors getWallpaperColors(
-      boolean darkText, boolean lightText, boolean darkLauncher) {
+  public WallpaperColors getWallpaperColors(boolean darkText, boolean lightText) {
     if (colors == null) {
       return WallpaperColors.fromBitmap(((BitmapDrawable) drawable).getBitmap());
     } else if (VERSION.SDK_INT >= 31) {
       int hints = 0;
       if (darkText) {
         hints |= WallpaperColors.HINT_SUPPORTS_DARK_TEXT;
-      } else if (darkLauncher) {
-        hints |= WallpaperColors.HINT_SUPPORTS_DARK_THEME;
       }
       return new WallpaperColors(
           colors.getPrimaryColor(),
@@ -98,11 +95,6 @@ public class WallpaperDrawable {
         float[] hsl = new float[3];
         ColorUtils.colorToHSL(primary, hsl);
         hsl[2] = 0.6f;
-        primary = ColorUtils.HSLToColor(hsl);
-      } else if (darkLauncher) {
-        float[] hsl = new float[3];
-        ColorUtils.colorToHSL(primary, hsl);
-        hsl[2] = 0.1f;
         primary = ColorUtils.HSLToColor(hsl);
       }
 
