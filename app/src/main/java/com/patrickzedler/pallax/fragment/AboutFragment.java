@@ -35,7 +35,6 @@ import com.patrickzedler.pallax.activity.MainActivity;
 import com.patrickzedler.pallax.behavior.ScrollBehavior;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
 import com.patrickzedler.pallax.databinding.FragmentAboutBinding;
-import com.patrickzedler.pallax.util.ResUtil;
 import com.patrickzedler.pallax.util.ViewUtil;
 
 public class AboutFragment extends BaseFragment implements OnClickListener {
@@ -73,24 +72,8 @@ public class AboutFragment extends BaseFragment implements OnClickListener {
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarAbout);
 
-    binding.toolbarAbout.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled(v.getId())) {
-        performHapticClick();
-        navigateUp();
-      }
-    });
-    binding.toolbarAbout.setOnMenuItemClickListener(item -> {
-      int id = item.getItemId();
-      if (id == R.id.action_feedback) {
-        activity.showFeedbackBottomSheet();
-      } else if (id == R.id.action_help) {
-        activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      } else if (id == R.id.action_share) {
-        ResUtil.share(activity, R.string.msg_share);
-      }
-      performHapticClick();
-      return true;
-    });
+    binding.toolbarAbout.setNavigationOnClickListener(getNavigationOnClickListener());
+    binding.toolbarAbout.setOnMenuItemClickListener(getOnMenuItemClickListener());
 
     ViewUtil.setOnClickListeners(
         this,

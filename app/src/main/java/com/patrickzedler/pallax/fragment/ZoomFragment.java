@@ -39,7 +39,6 @@ import com.patrickzedler.pallax.activity.MainActivity;
 import com.patrickzedler.pallax.behavior.ScrollBehavior;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
 import com.patrickzedler.pallax.databinding.FragmentZoomBinding;
-import com.patrickzedler.pallax.util.ResUtil;
 import com.patrickzedler.pallax.util.ViewUtil;
 
 public class ZoomFragment extends BaseFragment
@@ -77,28 +76,8 @@ public class ZoomFragment extends BaseFragment
     );
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarZoom);
-    binding.toolbarZoom.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled(v.getId())) {
-        performHapticClick();
-        navigateUp();
-      }
-    });
-    binding.toolbarZoom.setOnMenuItemClickListener(item -> {
-      int id = item.getItemId();
-      if (getViewUtil().isClickDisabled(id)) {
-        return false;
-      }
-      performHapticClick();
-
-      if (id == R.id.action_feedback) {
-        activity.showFeedbackBottomSheet();
-      } else if (id == R.id.action_help) {
-        activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      } else if (id == R.id.action_share) {
-        ResUtil.share(activity, R.string.msg_share);
-      }
-      return true;
-    });
+    binding.toolbarZoom.setNavigationOnClickListener(getNavigationOnClickListener());
+    binding.toolbarZoom.setOnMenuItemClickListener(getOnMenuItemClickListener());
 
     binding.sliderZoomIntensity.setValue(
         getSharedPrefs().getInt(PREF.ZOOM_INTENSITY, DEF.ZOOM_INTENSITY)

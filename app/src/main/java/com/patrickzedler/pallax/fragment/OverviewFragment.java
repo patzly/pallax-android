@@ -32,7 +32,6 @@ import com.patrickzedler.pallax.activity.MainActivity;
 import com.patrickzedler.pallax.behavior.ScrollBehavior;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
 import com.patrickzedler.pallax.databinding.FragmentOverviewBinding;
-import com.patrickzedler.pallax.util.ResUtil;
 import com.patrickzedler.pallax.util.ViewUtil;
 
 public class OverviewFragment extends BaseFragment implements OnClickListener {
@@ -73,22 +72,7 @@ public class OverviewFragment extends BaseFragment implements OnClickListener {
         binding.appBarOverview, binding.scrollOverview, true
     );
 
-    binding.toolbarOverview.setOnMenuItemClickListener(item -> {
-      int id = item.getItemId();
-      if (getViewUtil().isClickDisabled(id)) {
-        return false;
-      }
-      performHapticClick();
-
-      if (id == R.id.action_feedback) {
-        activity.showFeedbackBottomSheet();
-      } else if (id == R.id.action_help) {
-        activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      } else if (id == R.id.action_share) {
-        ResUtil.share(activity, R.string.msg_share);
-      }
-      return true;
-    });
+    binding.toolbarOverview.setOnMenuItemClickListener(getOnMenuItemClickListener());
     MenuItem itemHelp = binding.toolbarOverview.getMenu().findItem(R.id.action_help);
     if (itemHelp != null) {
       itemHelp.setVisible(false);

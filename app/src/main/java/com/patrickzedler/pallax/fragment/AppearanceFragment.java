@@ -32,10 +32,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.color.DynamicColors;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.slider.Slider.OnChangeListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.PREF;
@@ -45,7 +43,6 @@ import com.patrickzedler.pallax.behavior.ScrollBehavior;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
 import com.patrickzedler.pallax.databinding.FragmentAppearanceBinding;
 import com.patrickzedler.pallax.drawable.WallpaperDrawable;
-import com.patrickzedler.pallax.service.LiveWallpaperService;
 import com.patrickzedler.pallax.util.BitmapUtil;
 import com.patrickzedler.pallax.util.ResUtil;
 import com.patrickzedler.pallax.util.SystemUiUtil;
@@ -93,28 +90,8 @@ public class AppearanceFragment extends BaseFragment
     );
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarAppearance);
-    binding.toolbarAppearance.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled(v.getId())) {
-        performHapticClick();
-        navigateUp();
-      }
-    });
-    binding.toolbarAppearance.setOnMenuItemClickListener(item -> {
-      int id = item.getItemId();
-      if (getViewUtil().isClickDisabled(id)) {
-        return false;
-      }
-      performHapticClick();
-
-      if (id == R.id.action_feedback) {
-        activity.showFeedbackBottomSheet();
-      } else if (id == R.id.action_help) {
-        activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      } else if (id == R.id.action_share) {
-        ResUtil.share(activity, R.string.msg_share);
-      }
-      return true;
-    });
+    binding.toolbarAppearance.setNavigationOnClickListener(getNavigationOnClickListener());
+    binding.toolbarAppearance.setOnMenuItemClickListener(getOnMenuItemClickListener());
 
     areListenersActive = true;
 
@@ -454,13 +431,5 @@ public class AppearanceFragment extends BaseFragment
       binding.imageAppearanceWallpaperMode.setVisibility(View.GONE);
       binding.imageAppearanceWallpaper.setVisibility(View.VISIBLE);
     }
-  }
-
-  private void showMonetInfoIfRequired() {
-    if (activity == null || binding == null || !DynamicColors.isDynamicColorAvailable()
-        || !LiveWallpaperService.isMainEngineRunning()) {
-      return;
-    }
-    activity.showSnackbar(activity.getSnackbar(R.string.msg_apply_colors, Snackbar.LENGTH_LONG));
   }
 }

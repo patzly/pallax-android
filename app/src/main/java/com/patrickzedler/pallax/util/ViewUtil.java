@@ -60,8 +60,7 @@ public class ViewUtil {
 
   private static final String TAG = ViewUtil.class.getSimpleName();
 
-  private long lastClick;
-  private long idle;
+  private final long idle;
   private final LinkedList<Timestamp> timestamps;
 
   private static class Timestamp {
@@ -79,13 +78,11 @@ public class ViewUtil {
 
   public ViewUtil(long minClickIdle) {
     idle = minClickIdle;
-    lastClick = 0;
     timestamps = new LinkedList<>();
   }
 
   public ViewUtil() {
     idle = 500;
-    lastClick = 0;
     timestamps = new LinkedList<>();
   }
 

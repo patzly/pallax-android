@@ -176,8 +176,7 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
       wallpaper.setDimming(dimming);
       binding.wallpaperOverwriteNew.setWallpaper(wallpaper);
     } else {
-      binding.linearOverwriteConnection.setVisibility(View.GONE);
-      binding.cardOverwriteNew.setVisibility(View.GONE);
+      binding.linearOverwriteContainerPreviews.setVisibility(View.GONE);
     }
   }
 

@@ -37,7 +37,6 @@ import com.patrickzedler.pallax.activity.MainActivity;
 import com.patrickzedler.pallax.behavior.ScrollBehavior;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
 import com.patrickzedler.pallax.databinding.FragmentParallaxBinding;
-import com.patrickzedler.pallax.util.ResUtil;
 import com.patrickzedler.pallax.util.SensorUtil;
 import com.patrickzedler.pallax.util.ViewUtil;
 
@@ -78,28 +77,8 @@ public class ParallaxFragment extends BaseFragment
     );
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarParallax);
-    binding.toolbarParallax.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled(v.getId())) {
-        performHapticClick();
-        navigateUp();
-      }
-    });
-    binding.toolbarParallax.setOnMenuItemClickListener(item -> {
-      int id = item.getItemId();
-      if (getViewUtil().isClickDisabled(id)) {
-        return false;
-      }
-      performHapticClick();
-
-      if (id == R.id.action_feedback) {
-        activity.showFeedbackBottomSheet();
-      } else if (id == R.id.action_help) {
-        activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      } else if (id == R.id.action_share) {
-        ResUtil.share(activity, R.string.msg_share);
-      }
-      return true;
-    });
+    binding.toolbarParallax.setNavigationOnClickListener(getNavigationOnClickListener());
+    binding.toolbarParallax.setOnMenuItemClickListener(getOnMenuItemClickListener());
 
     binding.sliderParallaxIntensity.setValue(getSharedPrefs().getInt(PREF.PARALLAX, DEF.PARALLAX));
     binding.sliderParallaxIntensity.addOnChangeListener(this);

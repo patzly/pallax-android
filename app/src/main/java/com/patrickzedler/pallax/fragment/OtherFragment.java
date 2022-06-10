@@ -86,28 +86,8 @@ public class OtherFragment extends BaseFragment implements OnClickListener {
     );
 
     ViewUtil.centerToolbarTitleOnLargeScreens(binding.toolbarOther);
-    binding.toolbarOther.setNavigationOnClickListener(v -> {
-      if (getViewUtil().isClickEnabled(v.getId())) {
-        performHapticClick();
-        navigateUp();
-      }
-    });
-    binding.toolbarOther.setOnMenuItemClickListener(item -> {
-      int id = item.getItemId();
-      if (getViewUtil().isClickDisabled(id)) {
-        return false;
-      }
-      performHapticClick();
-
-      if (id == R.id.action_feedback) {
-        activity.showFeedbackBottomSheet();
-      } else if (id == R.id.action_help) {
-        activity.showTextBottomSheet(R.raw.help, R.string.action_help);
-      } else if (id == R.id.action_share) {
-        ResUtil.share(activity, R.string.msg_share);
-      }
-      return true;
-    });
+    binding.toolbarOther.setNavigationOnClickListener(getNavigationOnClickListener());
+    binding.toolbarOther.setOnMenuItemClickListener(getOnMenuItemClickListener());
 
     binding.textOtherLanguage.setText(getLanguage());
 
