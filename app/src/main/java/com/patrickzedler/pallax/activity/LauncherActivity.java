@@ -129,7 +129,7 @@ public class LauncherActivity extends MainActivity {
           if (DynamicColors.isDynamicColorAvailable()) {
             DynamicColors.applyToActivityIfAvailable(this);
           } else {
-            setTheme(R.style.Theme_Pallax_Blue);
+            setTheme(R.style.Theme_Pallax_Green);
           }
           break;
       }

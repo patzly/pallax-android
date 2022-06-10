@@ -240,8 +240,8 @@ public class OtherFragment extends BaseFragment implements OnClickListener {
         name = THEME.AMOLED;
         resId = R.style.Theme_Pallax_Amoled;
       } else {
-        name = THEME.BLUE;
-        resId = R.style.Theme_Pallax_Blue;
+        name = THEME.GREEN;
+        resId = R.style.Theme_Pallax_Green;
       }
 
       SelectionCardView card = new SelectionCardView(activity);
