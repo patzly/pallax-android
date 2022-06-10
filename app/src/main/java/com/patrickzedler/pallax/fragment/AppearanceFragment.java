@@ -310,14 +310,20 @@ public class AppearanceFragment extends BaseFragment
     cardInactive.setStrokeWidth(SystemUiUtil.dpToPx(activity, 1));
     cardInactive.setChecked(false);
 
-    binding.imageAppearanceWallpaperMode.setImageResource(
-        !(isDarkMode && animated)
-            ? R.drawable.ic_round_dark_mode_to_light_mode_anim
-            : R.drawable.ic_round_light_mode_to_dark_mode_anim
-    );
     if (animated) {
+      binding.imageAppearanceWallpaperMode.setImageResource(
+          isDarkMode
+              ? R.drawable.ic_round_light_mode_to_dark_mode_anim
+              : R.drawable.ic_round_dark_mode_to_light_mode_anim
+      );
       ViewUtil.startIcon(binding.imageAppearanceWallpaper);
       ViewUtil.startIcon(binding.imageAppearanceWallpaperMode);
+    } else {
+      binding.imageAppearanceWallpaperMode.setImageResource(
+          isDarkMode
+              ? R.drawable.ic_round_dark_mode_to_light_mode_anim
+              : R.drawable.ic_round_light_mode_to_dark_mode_anim
+      );
     }
 
     updateDarkModeDependencies();
