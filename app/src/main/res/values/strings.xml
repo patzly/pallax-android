@@ -63,7 +63,6 @@
   <string name="action_grant">Grant access</string>
   <string name="action_back">Back</string>
   <string name="action_open_link">Open external website</string>
-  <string name="action_hide">Hide</string>
   <string name="action_reset">Reset</string>
   <string name="action_retry">Retry</string>
   <string name="action_continue">Continue</string>
@@ -152,8 +151,6 @@
   <string name="other_language_description">Many thanks to all the volunteer translators at Transifex! Please visit the project\'s GitHub page to learn how you can help make Pallax Live Wallpapers available for your language.</string>
   <string name="other_language_system">System default: %1$s</string>
   <string name="other_language_not_available">Not available</string>
-  <string name="other_launcher">Hide icon in launcher</string>
-  <string name="other_launcher_description">Settings will only be accessible in your system\'s live wallpaper picker</string>
   <string name="other_theme">App color theme</string>
   <string name="other_theme_description">Try another look</string>
   <string name="other_theme_auto">Auto</string>
@@ -183,7 +180,6 @@
 
   <string name="msg_feedback">A great app requires a lot of time and lives from the feedback of its users.\n\nDo you have any wishes, comments or questions? Contact me!\nOtherwise I would be very happy about a nice review in the Play Store.</string>
   <string name="msg_share">Check out this cool live wallpaper app: \nhttps://play.google.com/store/apps/details?id=com.patrickzedler.pallax</string>
-  <string name="msg_hide">Hide icon in launcher?</string>
   <string name="msg_reset">Reset all settings?</string>
   <string name="msg_force_stop">Forced stop required to apply changes</string>
   <string name="msg_apply_colors">Changed colors will be applied to the system the next time you turn off the screen</string>

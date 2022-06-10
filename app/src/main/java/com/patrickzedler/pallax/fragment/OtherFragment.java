@@ -19,33 +19,24 @@
 
 package com.patrickzedler.pallax.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.ComponentName;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.color.DynamicColors;
-import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.snackbar.Snackbar.Callback;
 import com.patrickzedler.pallax.Constants.DEF;
 import com.patrickzedler.pallax.Constants.EXTRA;
 import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.THEME;
 import com.patrickzedler.pallax.R;
-import com.patrickzedler.pallax.activity.LauncherActivity;
 import com.patrickzedler.pallax.activity.MainActivity;
 import com.patrickzedler.pallax.behavior.ScrollBehavior;
 import com.patrickzedler.pallax.behavior.SystemBarBehavior;
@@ -59,8 +50,7 @@ import com.patrickzedler.pallax.util.ViewUtil;
 import com.patrickzedler.pallax.view.SelectionCardView;
 import java.util.Locale;
 
-public class OtherFragment extends BaseFragment
-    implements OnClickListener, OnCheckedChangeListener {
+public class OtherFragment extends BaseFragment implements OnClickListener {
 
   private static final String TAG = OtherFragment.class.getSimpleName();
 
@@ -123,12 +113,6 @@ public class OtherFragment extends BaseFragment
 
     setUpThemeSelection();
 
-    binding.switchOtherLauncher.setChecked(
-        activity.getPackageManager().getComponentEnabledSetting(
-            new ComponentName(activity, LauncherActivity.class)
-        ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-    );
-
     int id;
     switch (getSharedPrefs().getInt(PREF.MODE, DEF.MODE)) {
       case MODE.LIGHT:
@@ -164,13 +148,7 @@ public class OtherFragment extends BaseFragment
     ViewUtil.setOnClickListeners(
         this,
         binding.linearOtherLanguage,
-        binding.linearOtherLauncher,
         binding.linearOtherReset
-    );
-
-    ViewUtil.setOnCheckedChangeListeners(
-        this,
-        binding.switchOtherLauncher
     );
   }
 
@@ -181,9 +159,6 @@ public class OtherFragment extends BaseFragment
       ViewUtil.startIcon(binding.imageOtherLanguage);
       performHapticClick();
       navigate(OtherFragmentDirections.actionOtherToLanguagesDialog());
-    } else if (id == R.id.linear_other_launcher) {
-      ViewUtil.startIcon(binding.imageOtherLauncher);
-      binding.switchOtherLauncher.setChecked(!binding.switchOtherLauncher.isChecked());
     } else if (id == R.id.linear_other_reset && getViewUtil().isClickEnabled(id)) {
       ViewUtil.startIcon(binding.imageOtherReset);
       performHapticClick();
@@ -203,56 +178,6 @@ public class OtherFragment extends BaseFragment
               }
           )
       );
-    }
-  }
-
-  @SuppressLint("ShowToast")
-  @Override
-  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-    int id = buttonView.getId();
-    if (id == R.id.switch_other_launcher) {
-      performHapticClick();
-      if (isChecked) {
-        activity.showSnackbar(
-            activity.getSnackbar(
-                R.string.msg_hide, Snackbar.LENGTH_LONG
-            ).setAction(
-                getString(R.string.action_hide), view -> {
-                  performHapticHeavyClick();
-                  activity.getPackageManager().setComponentEnabledSetting(
-                      new ComponentName(activity, LauncherActivity.class),
-                      PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                      PackageManager.DONT_KILL_APP
-                  );
-                }
-            ).addCallback(new Callback() {
-              @Override
-              public void onDismissed(Snackbar transientBottomBar, int event) {
-                if (binding == null || activity == null
-                    || event == BaseCallback.DISMISS_EVENT_CONSECUTIVE) {
-                  return;
-                }
-                try {
-                  binding.switchOtherLauncher.setOnCheckedChangeListener(null);
-                  binding.switchOtherLauncher.setChecked(
-                      activity.getPackageManager().getComponentEnabledSetting(
-                          new ComponentName(activity, LauncherActivity.class)
-                      ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                  );
-                  binding.switchOtherLauncher.setOnCheckedChangeListener(OtherFragment.this);
-                } catch (NullPointerException e) {
-                  Log.e(TAG, "onDismissed: error when the snackbar was dismissed", e);
-                }
-              }
-            })
-        );
-      } else {
-        activity.getPackageManager().setComponentEnabledSetting(
-            new ComponentName(activity, LauncherActivity.class),
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        );
-      }
     }
   }
 
