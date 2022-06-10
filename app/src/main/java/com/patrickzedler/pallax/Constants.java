@@ -37,7 +37,8 @@ public final class Constants {
     // Appearance
 
     public static final String WALLPAPER = "wallpaper";
-    public static final String WALLPAPER_MODE = "wallpaper_mode";
+    public static final String WALLPAPER_DARK_MODE = "wallpaper_dark_mode";
+    public static final String WALLPAPER_FOLLOW_SYSTEM = "wallpaper_follow_system";
 
     public static final String SCALE = "scale";
     public static final String STATIC_OFFSET = "static_offset";
@@ -87,7 +88,9 @@ public final class Constants {
   public static final class DEF {
 
     public static final String WALLPAPER = null;
-    public static final int WALLPAPER_MODE = Constants.MODE.AUTO;
+    public static final boolean WALLPAPER_DARK_MODE = false;
+    public static final boolean WALLPAPER_FOLLOW_SYSTEM = true;
+
     public static final float SCALE = 1;
     public static final int STATIC_OFFSET = 0;
     public static final int COLOR = Color.BLACK;

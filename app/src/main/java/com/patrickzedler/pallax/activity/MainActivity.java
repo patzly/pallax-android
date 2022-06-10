@@ -411,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
     WallpaperManager manager = WallpaperManager.getInstance(this);
     Drawable drawable = manager.getDrawable();
     if (drawable != null) {
-      boolean isDarkMode = isWallpaperDarkMode();
+      boolean isDarkMode = isSelectedWallpaperDarkMode();
       String suffix = Constants.getDarkSuffix(isDarkMode);
       String otherSuffix = Constants.getDarkSuffix(!isDarkMode);
 
@@ -557,12 +557,20 @@ public class MainActivity extends AppCompatActivity {
   }
 
   public boolean isWallpaperDarkMode() {
-    int mode = getSharedPrefs().getInt(PREF.WALLPAPER_MODE, DEF.WALLPAPER_MODE);
-    if (mode == MODE.DARK) {
-      return true;
+    boolean isDarkMode = sharedPrefs.getBoolean(PREF.WALLPAPER_DARK_MODE, DEF.WALLPAPER_DARK_MODE);
+    boolean followSystem = sharedPrefs.getBoolean(
+        PREF.WALLPAPER_FOLLOW_SYSTEM, DEF.WALLPAPER_FOLLOW_SYSTEM
+    );
+    return followSystem ? SystemUiUtil.isDarkModeActive(this) : isDarkMode;
+  }
+
+  public boolean isSelectedWallpaperDarkMode() {
+    if (getCurrentFragment() instanceof AppearanceFragment) {
+      // the user sees the selected mode and means that and not the currently applied
+      return sharedPrefs.getBoolean(PREF.WALLPAPER_DARK_MODE, DEF.WALLPAPER_DARK_MODE);
+    } else {
+      return isWallpaperDarkMode();
     }
-    int flags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-    return mode == MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
   }
 
   public void reset() {

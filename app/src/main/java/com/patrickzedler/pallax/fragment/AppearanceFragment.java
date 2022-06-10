@@ -22,8 +22,6 @@ package com.patrickzedler.pallax.fragment;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,7 +38,6 @@ import com.google.android.material.slider.Slider.OnChangeListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.Constants.DEF;
-import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.R;
 import com.patrickzedler.pallax.activity.MainActivity;
@@ -61,7 +58,7 @@ public class AppearanceFragment extends BaseFragment
 
   private FragmentAppearanceBinding binding;
   private MainActivity activity;
-  private boolean isWallpaperDarkMode;
+  private boolean isDarkMode;
   private boolean areListenersActive;
   private String suffix;
   private WallpaperDrawable wallpaperDrawableLight, wallpaperDrawableDark;
@@ -121,65 +118,13 @@ public class AppearanceFragment extends BaseFragment
 
     areListenersActive = true;
 
-    binding.cardAppearanceWallpaperLight.setOnClickListener(this);
-    binding.cardAppearanceWallpaperDark.setOnClickListener(this);
-
     // DARK MODE
 
-    int idMode;
-    switch (getSharedPrefs().getInt(PREF.WALLPAPER_MODE, DEF.WALLPAPER_MODE)) {
-      case MODE.DARK:
-        idMode = R.id.button_appearance_mode_dark;
-        break;
-      case MODE.LIGHT:
-        idMode = R.id.button_appearance_mode_light;
-        break;
-      default:
-        idMode = R.id.button_appearance_mode_auto;
-        break;
-    }
-    binding.toggleAppearanceMode.check(idMode);
-    binding.toggleAppearanceMode.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-      if (!isChecked) {
-        return;
-      }
-      int pref;
-      if (checkedId == R.id.button_appearance_mode_dark) {
-        pref = MODE.DARK;
-      } else if (checkedId == R.id.button_appearance_mode_light) {
-        pref = MODE.LIGHT;
-      } else {
-        pref = MODE.AUTO;
-      }
-      getSharedPrefs().edit().putInt(PREF.WALLPAPER_MODE, pref).apply();
-      activity.requestThemeRefresh();
-      performHapticClick();
+    updateWallpaperSelection(activity.isWallpaperDarkMode(), false);
 
-      updateDarkModeDependencies();
-
-      boolean isNewWallpaperDarkMode = activity.isWallpaperDarkMode();
-      if (isWallpaperDarkMode != isNewWallpaperDarkMode) {
-        showMonetInfoIfRequired();
-        ViewUtil.startIcon(binding.imageAppearanceMode);
-        new Handler(Looper.getMainLooper()).postDelayed(
-            () -> binding.imageAppearanceMode.setImageResource(
-                isNewWallpaperDarkMode
-                    ? R.drawable.ic_round_dark_mode_to_light_mode_anim
-                    : R.drawable.ic_round_light_mode_to_dark_mode_anim
-            ),
-            300
-        );
-        isWallpaperDarkMode = isNewWallpaperDarkMode;
-        updatePreviewCardStyle();
-      }
-    });
-    isWallpaperDarkMode = activity.isWallpaperDarkMode();
-    binding.imageAppearanceMode.setImageResource(
-        isWallpaperDarkMode
-            ? R.drawable.ic_round_dark_mode_to_light_mode_anim
-            : R.drawable.ic_round_light_mode_to_dark_mode_anim
+    binding.switchAppearanceFollowSystem.setChecked(
+        getSharedPrefs().getBoolean(PREF.WALLPAPER_FOLLOW_SYSTEM, DEF.WALLPAPER_FOLLOW_SYSTEM)
     );
-    updatePreviewCardStyle();
 
     // SCALE
 
@@ -225,9 +170,6 @@ public class AppearanceFragment extends BaseFragment
       binding.linearAppearanceDarkLauncher.setVisibility(View.VISIBLE);
     }
 
-    // will be called in onResume() for updating correctly when system dark mode changes
-    // updateDarkModeDependencies();
-
     // Wallpaper previews
     loadPreview(false);
     updatePreview(false);
@@ -236,6 +178,9 @@ public class AppearanceFragment extends BaseFragment
 
     ViewUtil.setOnClickListeners(
         this,
+        binding.cardAppearanceWallpaperLight,
+        binding.cardAppearanceWallpaperDark,
+        binding.linearAppearanceFollowSystem,
         binding.frameAppearanceScaleReset,
         binding.linearAppearanceDarkText,
         binding.linearAppearanceLightText,
@@ -244,16 +189,11 @@ public class AppearanceFragment extends BaseFragment
 
     ViewUtil.setOnCheckedChangeListeners(
         this,
+        binding.switchAppearanceFollowSystem,
         binding.switchAppearanceDarkText,
         binding.switchAppearanceLightText,
         binding.switchAppearanceDarkLauncher
     );
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-    updateDarkModeDependencies();
   }
 
   @Override
@@ -263,19 +203,33 @@ public class AppearanceFragment extends BaseFragment
       if (binding.cardAppearanceWallpaperLight.isChecked()) {
         return;
       }
-      binding.toggleAppearanceMode.check(R.id.button_appearance_mode_light);
+      performHapticClick();
+      getSharedPrefs().edit().putBoolean(PREF.WALLPAPER_DARK_MODE, false).apply();
+      updateWallpaperSelection(false, true);
+      if (!binding.switchAppearanceFollowSystem.isChecked()) {
+        activity.requestThemeRefresh();
+      }
     } else if (id == R.id.card_appearance_wallpaper_dark) {
       if (binding.cardAppearanceWallpaperDark.isChecked()) {
         return;
       }
-      binding.toggleAppearanceMode.check(R.id.button_appearance_mode_dark);
+      performHapticClick();
+      getSharedPrefs().edit().putBoolean(PREF.WALLPAPER_DARK_MODE, true).apply();
+      updateWallpaperSelection(true, true);
+      if (!binding.switchAppearanceFollowSystem.isChecked()) {
+        activity.requestThemeRefresh();
+      }
+    } else if (id == R.id.linear_appearance_follow_system) {
+      binding.switchAppearanceFollowSystem.setChecked(
+          !binding.switchAppearanceFollowSystem.isChecked()
+      );
     } else if (id == R.id.frame_appearance_scale_reset) {
-      float def = WallpaperDrawable.getDefaultScale(activity, activity.isWallpaperDarkMode());
+      float def = WallpaperDrawable.getDefaultScale(activity, isDarkMode);
       float scaleOld = binding.sliderAppearanceScale.getValue();
       float scaleNew = def * 10;
       binding.sliderAppearanceScale.setValue(scaleNew);
       getSharedPrefs().edit().putFloat(PREF.SCALE + suffix, def).apply();
-      updatePreview(isWallpaperDarkMode);
+      updatePreview(isDarkMode);
       if (scaleNew != scaleOld) {
         activity.requestSettingsRefresh();
       }
@@ -302,7 +256,12 @@ public class AppearanceFragment extends BaseFragment
       return;
     }
     int id = buttonView.getId();
-    if (id == R.id.switch_appearance_dark_text) {
+    if (id == R.id.switch_appearance_follow_system) {
+      getSharedPrefs().edit().putBoolean(PREF.WALLPAPER_FOLLOW_SYSTEM, isChecked).apply();
+      activity.requestThemeRefresh();
+      performHapticClick();
+      ViewUtil.startIcon(binding.imageAppearanceFollowSystem);
+    } else if (id == R.id.switch_appearance_dark_text) {
       getSharedPrefs().edit().putBoolean(PREF.USE_DARK_TEXT + suffix, isChecked).apply();
       activity.requestThemeRefresh();
       performHapticClick();
@@ -328,34 +287,63 @@ public class AppearanceFragment extends BaseFragment
     int id = slider.getId();
     if (id == R.id.slider_appearance_scale) {
       getSharedPrefs().edit().putFloat(PREF.SCALE + suffix, value / 10).apply();
-      updatePreview(isWallpaperDarkMode);
+      updatePreview(isDarkMode);
       ViewUtil.startIcon(binding.imageSizeScale);
       activity.requestSettingsRefresh();
       performHapticClick();
     } else if (id == R.id.slider_appearance_static_offset) {
       getSharedPrefs().edit().putInt(PREF.STATIC_OFFSET + suffix, (int) value).apply();
-      updatePreview(isWallpaperDarkMode);
+      updatePreview(isDarkMode);
       ViewUtil.startIcon(binding.imageAppearanceStaticOffset);
       activity.requestSettingsRefresh();
       performHapticClick();
     } else if (id == R.id.slider_appearance_dimming) {
       getSharedPrefs().edit().putInt(PREF.DIMMING + suffix, (int) value).apply();
-      updatePreview(isWallpaperDarkMode);
+      updatePreview(isDarkMode);
       ViewUtil.startIcon(binding.imageAppearanceDimming);
       activity.requestSettingsRefresh();
       performHapticClick();
     }
   }
 
+  private void updateWallpaperSelection(boolean isDarkMode, boolean animated) {
+    this.isDarkMode = isDarkMode;
+    MaterialCardView cardActive, cardInactive;
+    if (isDarkMode) {
+      cardActive = binding.cardAppearanceWallpaperDark;
+      cardInactive = binding.cardAppearanceWallpaperLight;
+    } else {
+      cardActive = binding.cardAppearanceWallpaperLight;
+      cardInactive = binding.cardAppearanceWallpaperDark;
+    }
+    cardActive.setStrokeColor(ResUtil.getColorAttr(activity, R.attr.colorPrimary));
+    cardActive.setStrokeWidth(SystemUiUtil.dpToPx(activity, 2));
+    cardActive.setChecked(true);
+    cardInactive.setStrokeColor(ResUtil.getColorAttr(activity, R.attr.colorOutline));
+    cardInactive.setStrokeWidth(SystemUiUtil.dpToPx(activity, 1));
+    cardInactive.setChecked(false);
+
+    binding.imageAppearanceWallpaperMode.setImageResource(
+        !(isDarkMode && animated)
+            ? R.drawable.ic_round_dark_mode_to_light_mode_anim
+            : R.drawable.ic_round_light_mode_to_dark_mode_anim
+    );
+    if (animated) {
+      ViewUtil.startIcon(binding.imageAppearanceWallpaper);
+      ViewUtil.startIcon(binding.imageAppearanceWallpaperMode);
+    }
+
+    updateDarkModeDependencies();
+  }
+
   public void updateDarkModeDependencies() {
-    boolean isDarkMode = activity.isWallpaperDarkMode();
     suffix = Constants.getDarkSuffix(isDarkMode);
 
     areListenersActive = false;
 
     float scale = getSharedPrefs().getFloat(
         PREF.SCALE + suffix,
-        WallpaperDrawable.getDefaultScale(activity, activity.isWallpaperDarkMode())
+        WallpaperDrawable.getDefaultScale(activity, isDarkMode)
     );
     binding.sliderAppearanceScale.setValue(scale * 10);
 
@@ -437,7 +425,7 @@ public class AppearanceFragment extends BaseFragment
 
     float scale = getSharedPrefs().getFloat(
         PREF.SCALE + suffix,
-        WallpaperDrawable.getDefaultScale(activity, activity.isWallpaperDarkMode())
+        WallpaperDrawable.getDefaultScale(activity, isDarkMode)
     );
     scale *= scaleRatio;
 
@@ -469,23 +457,13 @@ public class AppearanceFragment extends BaseFragment
         binding.wallpaperAppearanceLight.setVisibility(View.GONE);
       }
     }
-  }
-
-  private void updatePreviewCardStyle() {
-    MaterialCardView cardActive, cardInactive;
-    if (isWallpaperDarkMode) {
-      cardActive = binding.cardAppearanceWallpaperDark;
-      cardInactive = binding.cardAppearanceWallpaperLight;
+    if (wallpaperDrawableLight != null && wallpaperDrawableDark != null) {
+      binding.imageAppearanceWallpaperMode.setVisibility(View.VISIBLE);
+      binding.imageAppearanceWallpaper.setVisibility(View.GONE);
     } else {
-      cardActive = binding.cardAppearanceWallpaperLight;
-      cardInactive = binding.cardAppearanceWallpaperDark;
+      binding.imageAppearanceWallpaperMode.setVisibility(View.GONE);
+      binding.imageAppearanceWallpaper.setVisibility(View.VISIBLE);
     }
-    cardActive.setStrokeColor(ResUtil.getColorAttr(activity, R.attr.colorPrimary));
-    cardActive.setStrokeWidth(SystemUiUtil.dpToPx(activity, 2));
-    cardActive.setChecked(true);
-    cardInactive.setStrokeColor(ResUtil.getColorAttr(activity, R.attr.colorOutline));
-    cardInactive.setStrokeWidth(SystemUiUtil.dpToPx(activity, 1));
-    cardInactive.setChecked(false);
   }
 
   private void showMonetInfoIfRequired() {

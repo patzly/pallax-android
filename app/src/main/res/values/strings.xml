@@ -38,6 +38,7 @@
   <!-- TITLES -->
 
   <string name="title_permission_request">Permission required</string>
+  <string name="title_overwrite">Replace %1$s wallpaper?</string>
   <string name="title_apply_changes">Apply changes</string>
   <string name="title_feedback">Feedback</string>
   <string name="title_licenses">Open source licenses</string>
@@ -55,7 +56,7 @@
 
   <string name="action_keep">Keep</string>
   <string name="action_replace">Replace</string>
-  <string name="action_replace_all">Replace light and dark</string>
+  <string name="action_replace_all">Replace both light and dark</string>
   <string name="action_howto">How it works</string>
   <string name="action_close">Close</string>
   <string name="action_cancel">Cancel</string>
@@ -85,15 +86,15 @@
 
   <string name="appearance_title">Appearance</string>
   <string name="appearance_description">Position &amp; color options</string>
-  <string name="appearance_info">All settings on this page are linked to the currently selected wallpaper for light or dark mode. Switch between the modes to customize them individually.</string>
+  <string name="appearance_info">All settings on this page regarding size, position and color are linked to the currently selected wallpaper for light or dark mode. Switch between the modes to customize them individually.</string>
+  <string name="appearance_follow_system">Follow system</string>
+  <string name="appearance_follow_system_description">Use dark wallpaper when device is in dark mode</string>
   <string name="appearance_position_category">Position &amp; size</string>
   <string name="appearance_scale">Scale</string>
   <string name="appearance_scale_description">Useful for big screens and densities</string>
   <string name="appearance_static_offset">Horizontal offset correction</string>
   <string name="appearance_static_offset_description">Increase to move wallpaper to the right</string>
   <string name="appearance_colors_category">Colors</string>
-  <string name="appearance_mode">Wallpaper mode</string>
-  <string name="appearance_mode_description">Switch to customize the other one</string>
   <string name="appearance_dimming">Dimming</string>
   <string name="appearance_dimming_description">Negative for darkening and positive for brightening the image</string>
   <string name="appearance_dark_text">Dark text</string>

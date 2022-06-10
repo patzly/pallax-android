@@ -87,70 +87,6 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Icon"
-          android:paddingTop="8dp"
-          android:paddingBottom="0dp"
-          android:paddingStart="16dp"
-          android:paddingEnd="0dp">
-
-          <ImageView
-            android:id="@+id/image_appearance_mode"
-            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
-            android:layout_marginEnd="32dp"
-            tools:ignore="ContentDescription" />
-
-          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
-
-            <TextView
-              style="@style/Widget.Pallax.TextView.ListItem.Title"
-              android:text="@string/appearance_mode"
-              android:paddingStart="0dp"
-              android:paddingEnd="16dp"/>
-
-            <TextView
-              style="@style/Widget.Pallax.TextView.ListItem.Description"
-              android:text="@string/appearance_mode_description"
-              android:paddingStart="0dp"
-              android:paddingEnd="16dp"/>
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-              android:id="@+id/toggle_appearance_mode"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="8dp"
-              android:layout_marginBottom="16dp"
-              android:layout_marginEnd="16dp"
-              app:singleSelection="true"
-              app:selectionRequired="true">
-
-              <Button
-                android:id="@+id/button_appearance_mode_auto"
-                style="@style/Widget.Pallax.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/other_theme_auto" />
-
-              <Button
-                android:id="@+id/button_appearance_mode_dark"
-                style="@style/Widget.Pallax.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/other_theme_dark" />
-
-              <Button
-                android:id="@+id/button_appearance_mode_light"
-                style="@style/Widget.Pallax.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/other_theme_light" />
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-          </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
           style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine"
           android:paddingTop="0dp"
           android:paddingBottom="12dp"
@@ -162,6 +98,12 @@
             android:id="@+id/image_appearance_wallpaper"
             style="@style/Widget.Pallax.ImageView.ListItem.Icon"
             android:src="@drawable/ic_round_wallpaper_anim"
+            tools:ignore="ContentDescription" />
+
+          <ImageView
+            android:id="@+id/image_appearance_wallpaper_mode"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:visibility="gone"
             tools:ignore="ContentDescription" />
 
           <HorizontalScrollView
@@ -245,6 +187,35 @@
             </LinearLayout>
 
           </HorizontalScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/linear_appearance_follow_system"
+          style="@style/Widget.Pallax.LinearLayout.ListItem.TwoLine.Clickable">
+
+          <ImageView
+            android:id="@+id/image_appearance_follow_system"
+            style="@style/Widget.Pallax.ImageView.ListItem.Icon"
+            android:src="@drawable/ic_round_filter_b_and_w"
+            tools:ignore="ContentDescription" />
+
+          <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox.Stretch">
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Title"
+              android:layout_width="wrap_content"
+              android:text="@string/appearance_follow_system" />
+
+            <TextView
+              style="@style/Widget.Pallax.TextView.ListItem.Description"
+              android:text="@string/appearance_follow_system_description" />
+
+          </LinearLayout>
+
+          <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_appearance_follow_system"
+            style="@style/Widget.Pallax.Switch" />
 
         </LinearLayout>
 

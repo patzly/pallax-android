@@ -27,8 +27,9 @@
   android:orientation="vertical">
 
   <com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/toolbar_overwrite"
     style="@style/Widget.Pallax.Toolbar.Centered"
-    app:title="Replace stored wallpaper?" />
+    app:title="@string/title_overwrite" />
 
   <com.google.android.material.divider.MaterialDivider
     android:layout_width="match_parent"

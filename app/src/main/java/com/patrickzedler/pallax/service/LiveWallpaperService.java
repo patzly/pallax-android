@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -54,7 +53,6 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import com.patrickzedler.pallax.Constants;
 import com.patrickzedler.pallax.Constants.ACTION;
 import com.patrickzedler.pallax.Constants.DEF;
-import com.patrickzedler.pallax.Constants.MODE;
 import com.patrickzedler.pallax.Constants.PREF;
 import com.patrickzedler.pallax.Constants.REQUEST_SOURCE;
 import com.patrickzedler.pallax.Constants.USER_PRESENCE;
@@ -62,6 +60,7 @@ import com.patrickzedler.pallax.drawable.WallpaperDrawable;
 import com.patrickzedler.pallax.util.BitmapUtil;
 import com.patrickzedler.pallax.util.PrefsUtil;
 import com.patrickzedler.pallax.util.SensorUtil;
+import com.patrickzedler.pallax.util.SystemUiUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +76,6 @@ public class LiveWallpaperService extends WallpaperService {
 
   private SharedPreferences sharedPrefs;
   private WallpaperDrawable wallpaperDrawable;
-  private int darkMode;
   private boolean isPowerSaveMode;
   private BroadcastReceiver receiver;
   private String presence;
@@ -189,14 +187,6 @@ public class LiveWallpaperService extends WallpaperService {
     }
   }
 
-  private boolean isDarkMode() {
-    if (darkMode == MODE.DARK) {
-      return true;
-    }
-    int flags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-    return darkMode == MODE.AUTO && flags == Configuration.UI_MODE_NIGHT_YES;
-  }
-
   private boolean isKeyguardLocked() {
     return ((KeyguardManager) getSystemService(KEYGUARD_SERVICE)).isKeyguardLocked();
   }
@@ -233,6 +223,7 @@ public class LiveWallpaperService extends WallpaperService {
   class UserAwareEngine extends Engine implements UserPresenceListener, RefreshListener {
 
     private Context context;
+    private boolean isDarkMode, followSystem, isDark;
     private boolean darkText, lightText;
     private boolean darkLauncher;
     private int dimming;
@@ -256,7 +247,6 @@ public class LiveWallpaperService extends WallpaperService {
     private float offsetX;
     private long lastDrawZoomLauncher, lastDrawZoomUnlock, lastDrawTilt;
     private boolean isVisible;
-    private boolean isDark;
     private boolean isListenerRegistered = false;
     private boolean isSurfaceAvailable = false;
     private boolean iconDropConsumed = true;
@@ -389,10 +379,6 @@ public class LiveWallpaperService extends WallpaperService {
       }
     }
 
-    public boolean ping() {
-      return true;
-    }
-
     @Override
     public void onVisibilityChanged(boolean visible) {
       isVisible = visible;
@@ -506,8 +492,15 @@ public class LiveWallpaperService extends WallpaperService {
       powerSaveZoom = sharedPrefs.getBoolean(PREF.POWER_SAVE_ZOOM, DEF.POWER_SAVE_ZOOM);
     }
 
+    private boolean isDarkMode() {
+      return followSystem ? SystemUiUtil.isDarkModeActive(context) : isDarkMode;
+    }
+
     private void loadDarkModeDependencies() {
-      darkMode = sharedPrefs.getInt(PREF.WALLPAPER_MODE, DEF.WALLPAPER_MODE);
+      isDarkMode = sharedPrefs.getBoolean(PREF.WALLPAPER_DARK_MODE, DEF.WALLPAPER_DARK_MODE);
+      followSystem = sharedPrefs.getBoolean(
+          PREF.WALLPAPER_FOLLOW_SYSTEM, DEF.WALLPAPER_FOLLOW_SYSTEM
+      );
       isDark = isDarkMode();
       String suffix = isDark ? Constants.SUFFIX_DARK : Constants.SUFFIX_LIGHT;
 
@@ -785,6 +778,10 @@ public class LiveWallpaperService extends WallpaperService {
 
     private boolean animZoom() {
       return !(isPowerSaveMode && powerSaveZoom);
+    }
+
+    public boolean ping() {
+      return true;
     }
   }
 }

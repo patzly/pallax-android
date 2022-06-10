@@ -62,12 +62,12 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     binding = FragmentBottomsheetOverwriteBinding.inflate(inflater, container, false);
     activity = (MainActivity) requireActivity();
 
-    binding.textOverwriteQuestion.setText(
-        getString(
-            R.string.msg_replace_or_keep,
-            getString(activity.isWallpaperDarkMode() ? R.string.label_dark : R.string.label_light)
-        )
-    );
+    isDarkMode = activity.isSelectedWallpaperDarkMode();
+    String suffix = Constants.getDarkSuffix(isDarkMode);
+
+    String gap = getString(isDarkMode ? R.string.label_dark : R.string.label_light);
+    binding.toolbarOverwrite.setTitle(getString(R.string.title_overwrite, gap));
+    binding.textOverwriteQuestion.setText(getString(R.string.msg_replace_or_keep, gap));
 
     int screenWidth = SystemUiUtil.getDisplayWidth(activity);
     int screenHeight = SystemUiUtil.getDisplayHeight(activity);
@@ -83,12 +83,8 @@ public class OverwriteBottomSheetDialogFragment extends BaseBottomSheetDialogFra
     previewHeight = (int) (previewWidth * screenRatio);
     scaleRatio = ((float) previewHeight) / ((float) screenHeight);
 
-    isDarkMode = activity.isWallpaperDarkMode();
-    String suffix = Constants.getDarkSuffix(isDarkMode);
-
     scale = getSharedPrefs().getFloat(
-        PREF.SCALE + suffix,
-        WallpaperDrawable.getDefaultScale(activity, activity.isWallpaperDarkMode())
+        PREF.SCALE + suffix, WallpaperDrawable.getDefaultScale(activity, isDarkMode)
     );
     scale *= scaleRatio;
 
