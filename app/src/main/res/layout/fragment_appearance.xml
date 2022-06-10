@@ -69,6 +69,7 @@
             style="@style/Widget.Pallax.TextView.Paragraph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:text="@string/appearance_info" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -315,7 +316,7 @@
           <ImageView
             android:id="@+id/image_appearance_dimming"
             style="@style/Widget.Pallax.ImageView.ListItem.Icon"
-            android:src="@drawable/ic_round_swap_horiz_anim"
+            android:src="@drawable/ic_round_gradient"
             tools:ignore="ContentDescription" />
 
           <LinearLayout style="@style/Widget.Pallax.LinearLayout.ListItem.TextBox">
