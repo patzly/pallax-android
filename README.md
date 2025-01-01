@@ -4,6 +4,8 @@
 
 Pallax Android is an Android app that lets you convert your current static home screen background into a stunning live wallpaper experience with auto dark mode and power-efficient parallax and zoom animations, all customizable to your preferences.
 
+> ⚠️ Because large bitmap rendering is much more complicated than shape rendering like in my other app [Doodle Live Wallpapers](https://github.com/patzly/doodle-android) and I ran into verious fundamental issues regarding efficient bitmap rendering on a live wallpaper canvas, I will no longer maintain this project.
+
 ## Download
 
 <a href='https://github.com/patzly/pallax-android/releases'><img alt='Get it on GitHub' height="80" src='assets/badge_github.png'/></a>
